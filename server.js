@@ -1,5 +1,24 @@
 const express = require('express'); 
 const app = express();
+
+var session = require("express-session");
+var MySqlStore = require("express-mysql-session")(session);
+var options = {
+  host: "127.0.0.1",
+  user: "root",
+  password: "123qwe",
+  database: "testserver",
+};
+var sessionStore = new MySqlStore(options);
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: true,
+    store: sessionStore,
+  })
+);
+
 const path = require('path');
 const http = require('http');
 
