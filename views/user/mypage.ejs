@@ -37,10 +37,10 @@
       </div>
 			<form>
                 <div>
-                  <input type="email" id="email" name="email" placeholder="이메일" style="width: 140%; padding:0.5em;" disabled value="xxx123@gmail.com">
+                  <input type="email" id="email" name="email" placeholder="이메일" style="width: 140%; padding:0.5em;" disabled value="<%=results[1].loginid%>">
                 </div>
                 <div>
-                  <input type="text" id="name" name="name" placeholder="이름/학번" style="width: 140%; padding:0.5em;" disabled value="홍길동/202036281">
+                  <input type="text" id="name" name="name" placeholder="이름/학번" style="width: 140%; padding:0.5em;" disabled value="<%=results[1].name%>/ <%=results[1].name%>">
                 </div>
               </form>
 		</div>
@@ -50,6 +50,7 @@
         <a href="/mypage/change_id/"><button class="changebtn">아이디 변경</button></a>
         <a href="/mypage/change_pw/"><button class="changebtn">비밀번호 변경</button></a>
         <a href="/mypage/withdraw/"><button class="changebtn">회원 탈퇴</button></a> 
+        
       </div>
 		</div>
 	</div>
