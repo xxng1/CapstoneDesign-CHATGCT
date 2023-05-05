@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>사용자 정보 확인 및 변경</title>
+	<link rel="stylesheet" type="text/css" href="/css/mypagestyle.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cute+Font&family=Gugi&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+</head>
+<body>
+  <ul class="navbar">
+    <li class="nav-item" style="min-height : 45px"  >
+      <a href="/"><img src="../images/home1.png" alt="홈" style="float: left;"></a>
+      <a class="title">CHAT - GCT</a>
+      <button id="showPanelBtn" style="float: right;" ><img src="../images/Menu.png" alt="메뉴" ></button>
+      <div id="panel">
+        <button id="hidePanelBtn" style="margin-left:auto;" ><img src="../images/hide.png" alt="닫기"></button>
+        <span style="margin-top: 30px; font-size: 20px;">CHAT-GCT</span>
+        <img src="../images/gachon.png" style="width: 45px; height:45px; margin:10px">
+        <a href="/login/"><button class="logbtn" id="loginbtn" onclick="login()">로그인</button></a>
+        <button class="logbtn" id="logoutbtn" onclick="logout()" style="display: none;">로그아웃</button>
+        <div class="panelbtn">
+          <a href="/mypage/" id="mypagebtn" style="display: none;"><button class="panelbtn1">내 정보</button></a>
+          <a href="/timetable/" id="timetablebtn" style="display: none;"><button class="panelbtn1">시간표</button></a>
+        </div>
+      </div>
+    </li>
+  </ul>
+    <p class="boundary"></p>
+	<div class="container">
+		<div class="box" style="margin-bottom: 20px; margin-top:20px;">
+			<div class="info" >
+          <h4>내 정보</h4>
+          <button class="edit" id="button1" onclick="enableInput()">정보수정</button>
+          <button class="edit" id="button2" onclick="disableInput()" style="display: none;">저장</button>
+      </div>
+			<form>
+                <div>
+                  <input type="email" id="email" name="email" placeholder="이메일" style="width: 140%; padding:0.5em;" disabled value="xxx123@gmail.com">
+                </div>
+                <div>
+                  <input type="text" id="name" name="name" placeholder="이름/학번" style="width: 140%; padding:0.5em;" disabled value="홍길동/202036281">
+                </div>
+              </form>
+		</div>
+		<div class="box">
+			<h4>변경 사항</h4>
+      <div class="change">
+        <a href="/mypage/change_id/"><button class="changebtn">아이디 변경</button></a>
+        <a href="/mypage/change_pw/"><button class="changebtn">비밀번호 변경</button></a>
+        <a href="/mypage/withdraw/"><button class="changebtn">회원 탈퇴</button></a> 
+      </div>
+		</div>
+	</div>
+
+  <script src="../js/panel.js"></script>
+  <script src="../js/chat.js"></script>
+</body>
+</html>
