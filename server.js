@@ -42,6 +42,7 @@ app.use('/login', loginRouter);
 app.use('/mypage', mypageRouter);
 app.use('/timetable', timetableRouter);
 
+
 app.get('/', function(req, res) {
   res.render('index');
 });

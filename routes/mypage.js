@@ -11,7 +11,7 @@ function authIsOwner(request, response) {
 }
 
 router.get('/', (req, res) => {
-    db.query(`SELECT * FROM person `, function (error, result) {
+    db.query(`SELECT * FROM user `, function (error, result) {
         if (error) {
           throw error;
         }
