@@ -10,10 +10,32 @@ function authIsOwner(request, response) {
       return false;
     }
 }
-
-router.get('/', (req, res) => {
-    res.render("user/login.ejs", { user: "" })
+//수정필요
+router.get('/', (request, response) => {
+    var subdoc;
+    if (authIsOwner(request, response) === true) {
+      subdoc = "index.ejs";
+    } else {
+      subdoc = "/user/login.ejs";
+    }
+    var context = {
+      doc: subdoc,
+      loggined: authIsOwner(request, response),
+      id: request.session.login_id,
+      cls: request.session.class,
+    };
+    request.app.render("user/login.ejs", context, function (err, html) {
+     response.end(html);
+    });
 });
+
+
+router.get('/logout', (request, response) => {
+    request.session.destroy(function (err) {
+        response.redirect("/");
+    });
+});
+
 
 router.get('/find_id/', (req, res) => {
     res.render("user/find_id.ejs", { user: "" })
@@ -41,7 +63,12 @@ router.post('/login_process', (request, response) => {
               if (error) {
                 throw error;
               }
-              if (result[0] === undefined) response.end("Who ?");
+              if (result[0] === undefined){
+                request.app.render("user/login_fail.ejs", function (err, html) {
+                    response.end(html);
+                });
+                //response.end("Who ?");
+              }
               else {
                 request.session.is_logined = true;
                 request.session.login_id = result[0].loginid;
