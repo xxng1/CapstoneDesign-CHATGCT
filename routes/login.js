@@ -57,7 +57,7 @@ router.post('/login_process', (request, response) => {
         request.on("end", function () {
           var post = qs.parse(body);
           db.query(
-            `SELECT loginid, password, class FROM person WHERE loginid = ? and password = ?`,
+            `SELECT loginid, password, class FROM user WHERE loginid = ? and password = ?`,
             [post.id, post.pw],
             function (error, result) {
               if (error) {
