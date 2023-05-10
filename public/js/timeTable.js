@@ -46,12 +46,42 @@ function buildTimeTable(courseData) {
     const cellIds = getTableCellIds(courseTime);
     const color = getRandomColor();
     const courseName = course["교과목명"];
+    const courseCellMap = {};
 
     cellIds.forEach((cellId) => {
-      const cell = table.querySelector(`#${cellId}`);
-      cell.style.backgroundColor = color;
-      cell.textContent = courseName;
+      const day = cellId.split("-")[0];
+      if (!courseCellMap[day]) {
+        courseCellMap[day] = [];
+      }
+      courseCellMap[day].push(cellId);
     });
+
+    for (const day in courseCellMap) {
+      courseCellMap[day].sort();
+
+      let startRow = parseInt(courseCellMap[day][0].split("-")[1], 10);
+      let endRow = parseInt(
+        courseCellMap[day][courseCellMap[day].length - 1].split("-")[1],
+        10
+      );
+
+      for (let i = 0; i < courseCellMap[day].length; i++) {
+        const cellId = courseCellMap[day][i];
+        const cell = table.querySelector(`#${cellId}`);
+
+        if (cell) {
+          cell.style.backgroundColor = color;
+
+          if (i === 0) {
+            cell.rowSpan = endRow - startRow + 1;
+            cell.textContent = courseName;
+          } else {
+            cell.style.display = "none";
+            cell.textContent = courseName;
+          }
+        }
+      }
+    }
   });
 }
 
@@ -162,13 +192,44 @@ function showModal(course) {
       }
 
       if (!duplicateFound) {
+        const courseCellMap = {};
+
         cellIds.forEach((cellId) => {
-          const cell = table.querySelector(`#${cellId}`);
-          cell.style.backgroundColor = color;
-          cell.textContent = courseName;
+          const day = cellId.split("-")[0];
+          if (!courseCellMap[day]) {
+            courseCellMap[day] = [];
+          }
+          courseCellMap[day].push(cellId);
         });
-      
-        // fetch 요청 보내기
+
+        for (const day in courseCellMap) {
+          courseCellMap[day].sort();
+
+          let startRow = parseInt(courseCellMap[day][0].split("-")[1], 10);
+          let endRow = parseInt(
+            courseCellMap[day][courseCellMap[day].length - 1].split("-")[1],
+            10
+          );
+
+          for (let i = 0; i < courseCellMap[day].length; i++) {
+            const cellId = courseCellMap[day][i];
+            const cell = table.querySelector(`#${cellId}`);
+
+            if (cell) {
+              cell.style.backgroundColor = color;
+
+              if (i === 0) {
+                cell.rowSpan = endRow - startRow + 1;
+                cell.textContent = courseName;
+              } else {
+                cell.style.display = i === 0 ? "table-cell" : "none";
+                cell.textContent = courseName;
+              }
+            }
+          }
+        }
+
+        // Send fetch request
         const data = {
           학수번호: course["학수번호"],
           교과목명: course["교과목명"],
@@ -177,7 +238,7 @@ function showModal(course) {
           강의시간: course["강의시간"],
           학점: course["학점"],
         };
-      
+
         fetch("/timeTable/addCourse", {
           method: "POST",
           headers: {
@@ -187,32 +248,9 @@ function showModal(course) {
         })
           .then((response) => response.json())
           .catch((error) => {
-            // 오류 처리
             console.error(error);
           });
-      
-        // Find the start row and end row for the course
-        const startRow = parseInt(cellIds[0].split("-")[1], 10);
-        const endRow = parseInt(cellIds[cellIds.length - 1].split("-")[1], 10);
-      
-        console.log('Start row:', startRow, 'End row:', endRow);
-      
-        // Merge the cells vertically and maintain cell width
-        const firstCellId = cellIds[0];
-        const firstCell = table.querySelector(`#${firstCellId}`);
-        firstCell.rowSpan = endRow - startRow + 1;
-      
-        // Remove other cells in the merged cell range
-        for (let i = 1; i < cellIds.length; i++) {
-          const cellId = cellIds[i];
-          const cell = table.querySelector(`#${cellId}`);
-          if (cell) {
-            cell.remove();
-          }
-        }
       }
-      
-      
     }
 
     modal.style.display = "none";
@@ -407,28 +445,18 @@ function showModalDelete(cell) {
   });
 }
 
-
-// Store the deleted cells information
-const deletedCells = {};
-console.log(deletedCells);
-
 // 강의를 삭제하는 함수
 function deleteCourse(cell) {
-  const cellId = cell.id;
   const courseName = cell.textContent.trim();
-  console.log(cellId);
-  
-  // Remove course from the table
-  cell.style.backgroundColor = "";
-  cell.textContent = "";
-  cell.rowSpan = 1;
+  const table = document.querySelector("#timeTable");
 
-  // Restore the deleted cell if it exists in the deletedCells object
-  const deletedCellInfo = deletedCells[cellId];
-  if (deletedCellInfo) {
-    const newRow = table.rows[deletedCellInfo.row];
-    newRow.insertBefore(deletedCellInfo.cell, newRow.children[deletedCellInfo.cellIndex]);
-    delete deletedCells[cellId];
+  for (const cell of table.querySelectorAll("td")) {
+    const cellCourseName = cell.textContent.trim();
+    if (cellCourseName === courseName) {
+      cell.textContent = "";
+      cell.removeAttribute("rowspan");
+      cell.removeAttribute("style");
+    }
   }
 
   // Remove course from the database
@@ -444,12 +472,11 @@ function deleteCourse(cell) {
     body: JSON.stringify(data),
   })
     .then((response) => response.json())
+    .then(() => {})
     .catch((error) => {
       console.error(error);
     });
 }
-
-
 
 // 실시간으로 검색하고 내용 출력
 document.addEventListener("DOMContentLoaded", function () {
