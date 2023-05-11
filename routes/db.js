@@ -1,9 +1,9 @@
-var mysql = require('mysql');
+var mysql = require("mysql");
 var db = mysql.createConnection({
-host : '127.0.0.1',
-user : 'root',
-password : '123qwe',
-database : 'testserver'
+  host: "localhost",
+  user: "dbid231",
+  password: "dbpass231",
+  database: "db23108",
 });
 db.connect();
 module.exports = db;

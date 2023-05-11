@@ -1,49 +1,77 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<title>아이디 변경</title>
-	<link rel="stylesheet" type="text/css" href="/css/changeidstyle.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cute+Font&family=Gugi&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
-</head>
-<body>
-  <ul class="navbar">
-    <li class="nav-item" style="min-height : 45px"  >
-      <a href="/"><img src="/images/home1.png" alt="홈" style="float: left;"></a>
-      <a class="title">CHAT - GCT</a>
-      <button id="showPanelBtn" style="float: right;" ><img src="/images/Menu.png" alt="메뉴" ></button>
-      <div id="panel">
-        <button id="hidePanelBtn" style="margin-left:auto;" ><img src="/images/hide.png" alt="닫기"></button>
-        <span style="margin-top: 30px; font-size: 20px;">CHAT-GCT</span>
-        <img src="/images/gachon.png" style="width: 45px; height:45px; margin:10px">
-        <a href="/login/"><button class="logbtn" id="loginbtn" onclick="login()">로그인</button></a>
-        <button class="logbtn" id="logoutbtn" onclick="logout()" style="display: none;">로그아웃</button>
-        <div class="panelbtn">
-          <a href="/mypage/" id="mypagebtn" style="display: none;"><button class="panelbtn1">내 정보</button></a>
-          <a href="/timetable/" id="timetablebtn" style="display: none;"><button class="panelbtn1">시간표</button></a>
+  <head>
+    <meta charset="utf-8" />
+    <title>아이디 변경</title>
+    <link rel="stylesheet" type="text/css" href="/css/changeidstyle.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cute+Font&family=Gugi&family=Nanum+Pen+Script&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <ul class="navbar">
+      <li class="nav-item" style="min-height: 45px">
+        <a href="/"
+          ><img src="/images/home1.png" alt="홈" style="float: left"
+        /></a>
+        <a class="title">CHAT - GCT</a>
+        <button id="showPanelBtn" style="float: right">
+          <img src="/images/Menu.png" alt="메뉴" />
+        </button>
+        <div id="panel">
+          <button id="hidePanelBtn" style="margin-left: auto">
+            <img src="/images/hide.png" alt="닫기" />
+          </button>
+          <span style="margin-top: 30px; font-size: 20px">CHAT-GCT</span>
+          <img
+            src="/images/gachon.png"
+            style="width: 45px; height: 45px; margin: 10px"
+          />
+          <!-- <a href="/login/"
+            ><button class="logbtn" id="loginbtn" onclick="login()">
+              로그인
+            </button></a
+          > -->
+          <a href="/login/logout"
+            ><button class="logbtn" id="logoutbtn" style="display: inline-block;">로그아웃</button></a
+          >
+          <div class="panelbtn">
+            <a href="/mypage/" id="mypagebtn" 
+              ><button class="panelbtn1">내 정보</button></a
+            >
+            <a href="/timetable/" id="timetablebtn" 
+              ><button class="panelbtn1">시간표</button></a
+            >
+          </div>
+        </div>
+      </li>
+    </ul>
+    <p class="boundary"></p>
+    <div class="container">
+      <div class="box" style="margin-bottom: 20px; margin-top: 20px">
+        <div class="info">
+          <h4 style="margin-bottom: 30px">아이디 변경</h4>
+          <form action="/mypage/changeid_process" method="post">
+            <h5 style="margin-top: 20px">변경할 아이디</h5>
+            <input
+              type="text"
+              id="changeid"
+              name="newid"
+              style="width: 160%; padding: 0.5em"
+            />
+            <button 
+              type="submit"
+              id="changeidbtn"
+              class="id_change">아이디 변경</button>
+          </form>
+          
         </div>
       </div>
-    </li>
-  </ul>
-    <p class="boundary"></p>
-	<div class="container">
-		<div class="box" style="margin-bottom: 20px; margin-top:20px;">
-			<div class="info" >
-                <h4 style="margin-bottom: 30px;">아이디 변경</h4>
-                <form>
-                    <h5>아이디</h5>
-                    <input type="text" id="id" style="width: 160%; padding:0.5em;">
-                    <h5 style="margin-top: 20px;">변경할 아이디</h5>
-                    <input type="text" id="changeid" style="width: 160%; padding:0.5em;">
-                  </form>
-                  <a href="/mypage/"><button class="id_change">아이디 변경</button></a>
-            </div>
-		</div>
-	</div>
+    </div>
 
-  <script src="/js/panel.js"></script>
-  <script src="/js/chat.js"></script>
-</body>
+    <script src="/js/panel.js"></script>
+  </body>
 </html>

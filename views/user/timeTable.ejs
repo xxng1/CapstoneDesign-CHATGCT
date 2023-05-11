@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width" , initial-scale="1.0" />
+    <title>가천대 시간표 생성기</title>
+    <link rel="stylesheet" href="/css/timeTable.css" />
+    <link
+      rel="stylesheet"
+      href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
+    />
+    <script src="../js/timeTable.js"></script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <header>
+      <h2 class="gct">chat-GCT</h2>
+      <nav class="navigation">
+        <a href="/">Home</a>
+        <a href="#">About</a>
+        <a href="/mypage/">MyPage</a>
+        <a href="#">Contract</a>
+      </nav>
+    </header>
+    <div class="container">
+      <div class="course-info wrapper">
+        <div class="course-search">
+          <h2>과목 검색</h2>
+          <form action="/timeTable" method="GET">
+            <input
+              type="text"
+              id="search-box"
+              name="search"
+              placeholder="교과목명 또는 담당교수 또는 학과를 입력하세요"
+            />
+            <select id="department-list" name="department">
+              <option value="전체 학과">전체 학과</option>
+              <option value="한국학전공">한국학전공</option>
+              <option value="경영학부">경영학부</option>
+              <option value="경영학부(경영학)">경영학부(경영학)</option>
+              <option value="경영학부(글로벌경영학)">
+                경영학부(글로벌경영학)
+              </option>
+              <option value="금융수학과">금융수학과</option>
+              <!-- 학과 목록 추가 -->
+            </select>
+            <button type="submit" id="search-button">검색</button>
+          </form>
+        </div>
+        <h2>과목 목록</h2>
+        <div>
+          <table class="header-table">
+            <thead>
+              <tr>
+                <th>학수번호</th>
+                <th>교과목명</th>
+                <th>이수</th>
+                <th>학점</th>
+                <th>담당교수</th>
+                <th>강의시간</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+        <div id="course-table" class="course-list-box">
+          <table id="course-list-box">
+            <tbody id="course-list-body">
+              <% if (courses.length === 0) { %>
+              <tr id="no-results">
+                <td colspan="6">일치하는 과목이 없습니다.</td>
+              </tr>
+              <% } else { %> <% courses.forEach(function(course) { %>
+              <tr>
+                <td><%= course.학수번호 %></td>
+                <td><%= course.교과목명 %></td>
+                <td><%= course.이수 %></td>
+                <td><%= course.학점 %></td>
+                <td><%= course.담당교수 %></td>
+                <td><%= course.강의시간 %></td>
+              </tr>
+              <% }) %> <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="timeTable wrapper">
+        <h2><%= name %>의 시간표</h2>
+        <table id="timeTable">
+          <thead>
+            <tr>
+              <th></th>
+              <th>월</th>
+              <th>화</th>
+              <th>수</th>
+              <th>목</th>
+              <th>금</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>오전 9시</th>
+              <td id="mon-09"></td>
+              <td id="tue-09"></td>
+              <td id="wed-09"></td>
+              <td id="thu-09"></td>
+              <td id="fri-09"></td>
+            </tr>
+            <tr>
+              <th>오전 10시</th>
+              <td id="mon-10"></td>
+              <td id="tue-10"></td>
+              <td id="wed-10"></td>
+              <td id="thu-10"></td>
+              <td id="fri-10"></td>
+            </tr>
+            <tr>
+              <th>오전 11시</th>
+              <td id="mon-11"></td>
+              <td id="tue-11"></td>
+              <td id="wed-11"></td>
+              <td id="thu-11"></td>
+              <td id="fri-11"></td>
+            </tr>
+            <tr>
+              <th>오후 12시</th>
+              <td id="mon-12"></td>
+              <td id="tue-12"></td>
+              <td id="wed-12"></td>
+              <td id="thu-12"></td>
+              <td id="fri-12"></td>
+            </tr>
+            <tr>
+              <th>오후 1시</th>
+              <td id="mon-13"></td>
+              <td id="tue-13"></td>
+              <td id="wed-13"></td>
+              <td id="thu-13"></td>
+              <td id="fri-13"></td>
+            </tr>
+            <tr>
+              <th>오후 2시</th>
+              <td id="mon-14"></td>
+              <td id="tue-14"></td>
+              <td id="wed-14"></td>
+              <td id="thu-14"></td>
+              <td id="fri-14"></td>
+            </tr>
+            <tr>
+              <th>오후 3시</th>
+              <td id="mon-15"></td>
+              <td id="tue-15"></td>
+              <td id="wed-15"></td>
+              <td id="thu-15"></td>
+              <td id="fri-15"></td>
+            </tr>
+            <tr>
+              <th>오후 4시</th>
+              <td id="mon-16"></td>
+              <td id="tue-16"></td>
+              <td id="wed-16"></td>
+              <td id="thu-16"></td>
+              <td id="fri-16"></td>
+            </tr>
+            <tr>
+              <th>오후 5시</th>
+              <td id="mon-17"></td>
+              <td id="tue-17"></td>
+              <td id="wed-17"></td>
+              <td id="thu-17"></td>
+              <td id="fri-17"></td>
+            </tr>
+            <tr>
+              <th>오후 6시</th>
+              <td id="mon-18"></td>
+              <td id="tue-18"></td>
+              <td id="wed-18"></td>
+              <td id="thu-18"></td>
+              <td id="fri-18"></td>
+            </tr>
+            <tr>
+              <th>오후 7시</th>
+              <td id="mon-19"></td>
+              <td id="tue-19"></td>
+              <td id="wed-19"></td>
+              <td id="thu-19"></td>
+              <td id="fri-19"></td>
+            </tr>
+            <tr>
+              <th>오후 8시</th>
+              <td id="mon-20"></td>
+              <td id="tue-20"></td>
+              <td id="wed-20"></td>
+              <td id="thu-20"></td>
+              <td id="fri-20"></td>
+            </tr>
+            <tr>
+              <th>오후 9시</th>
+              <td id="mon-21"></td>
+              <td id="tue-21"></td>
+              <td id="wed-21"></td>
+              <td id="thu-21"></td>
+              <td id="fri-21"></td>
+            </tr>
+            <tr>
+              <th>오후 10시</th>
+              <td id="mon-22"></td>
+              <td id="tue-22"></td>
+              <td id="wed-22"></td>
+              <td id="thu-22"></td>
+              <td id="fri-22"></td>
+            </tr>
+            <tr>
+              <th>오후 11시</th>
+              <td id="mon-23"></td>
+              <td id="tue-23"></td>
+              <td id="wed-23"></td>
+              <td id="thu-23"></td>
+              <td id="fri-23"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <button id="yes-btn">네</button>
+        <button id="no-btn">아니오</button>
+      </div>
+    </div>
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <button id="yes-btn">네</button>
+        <button id="no-btn">아니오</button>
+      </div>
+    </div>
+  </body>
+</html>
