@@ -30,20 +30,28 @@
             src="/images/gachon.png"
             style="width: 45px; height: 45px; margin: 10px"
           />
-          <!-- <a href="/login/"
+          <a href="/login/"
             ><button class="logbtn" id="loginbtn" onclick="login()">
               로그인
             </button></a
-          > -->
-          <a href="/login/logout"><button class="logbtn" id="logoutbtn" style="display: inline-block;">로그아웃</button></a>
+          >
+          <!-- <a href="/login/logout"
+            ><button
+              class="logbtn"
+              id="logoutbtn"
+              style="display: inline-block"
+            >
+              로그아웃
+            </button></a
+          >
           <div class="panelbtn">
-            <a href="/mypage/" id="mypagebtn" 
+            <a href="/mypage/" id="mypagebtn"
               ><button class="panelbtn1">내 정보</button></a
             >
-            <a href="/timetable/" id="timetablebtn" 
+            <a href="/timetable/" id="timetablebtn"
               ><button class="panelbtn1">시간표</button></a
             >
-          </div>
+          </div> -->
         </div>
       </li>
     </ul>
@@ -52,55 +60,81 @@
       <div class="box" style="margin-bottom: 20px; margin-top: 20px">
         <div class="info">
           <h4 style="margin-bottom: 30px">회원가입</h4>
-          <form action="/login/register_process" method="post">
+          <form id="send_code" onsubmit="return validate()">
             <h5>정보입력</h5>
-            
-            <input     
+            <input
               type="text"
-              style="width: 160%; padding:0.5em;"
+              style="width: 160%; padding: 0.5em"
               name="name"
               placeholder="이름"
               maxlength="20"
+              required
             />
-            <input     
+            <input
               type="text"
-              style="width: 160%; padding:0.5em;"
+              style="width: 160%; padding: 0.5em"
               name="studentnum"
               placeholder="학번"
               maxlength="20"
+              required
             />
-            <input     
+            <input
               type="text"
-              style="width: 160%; padding:0.5em;"
+              style="width: 160%; padding: 0.5em"
               name="subject"
               placeholder="학과"
               maxlength="20"
+              required
             />
-            <h5 style="margin-top: 20px;">아이디/비밀번호</h5>
-            <input     
-              type="text"
-              style="width: 160%; padding:0.5em;"
+            <h5 style="margin-top: 20px">이메일/비밀번호</h5>
+            <input
+              type="email"
+              style="width: 160%; padding: 0.5em"
               name="loginid"
-              placeholder="아이디"
-              maxlength="20"
+              placeholder="example@email.com"
+              required
             />
-            <input     
+            <input
               type="password"
-              style="width: 160%; padding:0.5em;"
+              style="width: 160%; padding: 0.5em"
               name="password"
+              id="password"
               placeholder="비밀번호"
-              maxlength="20"
             />
             <p>
-              <input type="hidden" name="class" value='a' />
+              <input type="hidden" name="class" value="a" />
             </p>
 
-            <a href="/" style="width: 100%; height:100%;"><button type="submit" class="login" style="margin-bottom: 20px;">회원가입 완료</button></a>
-        </form>
+            <a style="width: 100%; height: 100%"
+              ><button
+                type="submit"
+                id="register"
+                class="login"
+                style="margin-bottom: 20px"
+              >
+                회원 가입
+              </button></a
+            >
+          </form>
         </div>
       </div>
     </div>
-
+    <div id="verificationModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h5>인증 코드 입력</h5>
+        <form id="verificationCode" onsubmit="return validate()">
+          <input
+            type="text"
+            name="verificationCode"
+            placeholder="인증 코드"
+            required
+          />
+          <button type="submit">확인</button>
+        </form>
+      </div>
+    </div>
     <script src="/js/panel.js"></script>
+    <script src="/js/register.js"></script>
   </body>
 </html>

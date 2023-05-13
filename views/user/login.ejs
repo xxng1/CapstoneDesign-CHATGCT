@@ -31,9 +31,7 @@
             style="width: 45px; height: 45px; margin: 10px"
           />
           <a href="/login/"
-            ><button class="logbtn" id="loginbtn">
-              로그인
-            </button></a
+            ><button class="logbtn" id="loginbtn">로그인</button></a
           >
           <!-- <button
             class="logbtn"
@@ -58,25 +56,25 @@
     <div class="container">
       <div class="box" style="margin-bottom: 20px; margin-top: 20px; border: 0">
         <div class="info" style="margin-top: 100px">
-          <!--수정-->
-          <form action="/login/login_process" method="post">
+          <form id="login_process" onsubmit="return validate()">
             <h5>아이디</h5>
             <input
-              type="id"
+              type="eamil"
               class="form-control"
-              placeholder="ID"
+              placeholder="example@email.com"
+              id="username"
               name="id"
-              maxlength="20"
+              required
             />
             <h5 style="margin-top: 20px">비밀번호</h5>
             <input
               type="password"
               class="form-control"
-              id="inputPassword3"
+              placeholder="password"
+              id="password"
               name="pw"
-              maxlength="20"
+              required
             />
-            <!--수정-->
             <button
               type="submit"
               id="loginbtn2"
@@ -86,7 +84,6 @@
               로그인
             </button>
           </form>
-          <!--수정-->
         </div>
         <div class="jointab">
           <span style="color: gray">CHAT-GCT가 처음이신가요?</span>
@@ -96,5 +93,6 @@
     </div>
 
     <script src="../js/panel.js"></script>
+    <script src="../js/login.js"></script>
   </body>
 </html>

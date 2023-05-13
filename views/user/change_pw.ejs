@@ -52,7 +52,7 @@
       <div class="box" style="margin-bottom: 20px; margin-top: 20px">
         <div class="info">
           <h4 style="margin-bottom: 30px">비밀번호 변경</h4>
-          <form action="/mypage/changepw_process" method="post">
+          <form id="changepw_process" onsubmit="return validate()">
             <!-- <h5>비밀번호</h5>
             <input type="text" id="pw" style="width: 160%; padding: 0.5em" /> -->
             <h5 style="margin-top: 20px">변경할 비밀번호</h5>
@@ -80,5 +80,7 @@
     </div>
 
     <script src="/js/panel.js"></script>
+    <script src="/js/mypage_changePw.js"></script>
+    
   </body>
 </html>

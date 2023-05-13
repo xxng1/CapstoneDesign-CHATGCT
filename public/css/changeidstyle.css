@@ -155,3 +155,42 @@ button {
   margin-top: 20px;
   border-radius: 5px;
 }
+
+/* 모달창 전체를 감싸는 컨테이너 */
+.modal {
+  display: none; /* 기본적으로 숨겨져 있음 */
+  position: fixed; /* 화면에 고정 */
+  z-index: 1; /* 다른 요소 위에 표시 */
+  padding-top: 100px; /* 위치 조정 */
+  left: 0;
+  top: 0;
+  width: 100%; /* 전체 너비 */
+  height: 100%; /* 전체 높이 */
+  overflow: auto; /* 스크롤 가능 */
+  background-color: rgb(0, 0, 0); /* 검은색 배경 */
+  background-color: rgba(0, 0, 0, 0.4); /* 검은색 배경에 약간의 투명도 */
+}
+
+/* 모달창 콘텐츠 */
+.modal-content {
+  background-color: #fefefe; /* 배경 색상 */
+  margin: auto; /* 중앙 배치 */
+  padding: 20px; /* 패딩 */
+  border: 1px solid #888; /* 테두리 */
+  width: 80%; /* 너비 */
+}
+
+/* 모달창 닫기 버튼 */
+.close {
+  color: #aaaaaa; /* 글자 색상 */
+  float: right; /* 오른쪽 배치 */
+  font-size: 28px; /* 글자 크기 */
+  font-weight: bold; /* 글자 두께 */
+}
+
+.close:hover,
+.close:focus {
+  color: #000; /* 마우스 오버 시 글자 색상 */
+  text-decoration: none; /* 마우스 오버 시 밑줄 없애기 */
+  cursor: pointer; /* 마우스 오버 시 커서 모양 변경 */
+}

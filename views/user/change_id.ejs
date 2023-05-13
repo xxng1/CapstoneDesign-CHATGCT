@@ -54,24 +54,40 @@
       <div class="box" style="margin-bottom: 20px; margin-top: 20px">
         <div class="info">
           <h4 style="margin-bottom: 30px">아이디 변경</h4>
-          <form action="/mypage/changeid_process" method="post">
+          <form id="changeEmail" onsubmit="return validate()">
             <h5 style="margin-top: 20px">변경할 아이디</h5>
             <input
               type="text"
-              id="changeid"
-              name="newid"
+              id="newEmail"
+              name="newEmail"
               style="width: 160%; padding: 0.5em"
             />
             <button 
               type="submit"
-              id="changeidbtn"
+              id="newEmailBtn"
               class="id_change">아이디 변경</button>
           </form>
           
         </div>
       </div>
     </div>
+    <div id="verificationModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h5>인증 코드 입력</h5>
+        <form id="verificationCode">
+          <input
+            type="text"
+            name="verificationCode"
+            placeholder="인증 코드"
+            required
+          />
+          <button type="submit">확인</button>
+        </form>
+      </div>
+    </div>
 
     <script src="/js/panel.js"></script>
+    <script src="/js/mypage_changeId.js"></script>
   </body>
 </html>
