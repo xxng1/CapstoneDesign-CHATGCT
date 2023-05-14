@@ -55,12 +55,20 @@ function handleSubmit(event, url) {
         window.location.href = data.redirect;
       } else {
         alert(data.message);
-        if (data.message.includes("은 이미 사용 중인 아이디입니다.")) {
+        if (data.message.includes("진행하던 인증을 마무리하세요.")) {
+          document.getElementById("verificationCodeText").value = "";
+          document.getElementById("verificationCodeText").focus();
+        } else if (data.message.includes("은 이미 사용중인 아이디 입니다.")) {
           modal.style.display = "none";
+          document.getElementById("newEmail").value = "";
           document.getElementById("newEmail").focus();
-        } else if (data.message.includes("인증코드가 일치하지 않습니다.")) {
+        } else if (data.message.includes("아이디 변경이 없습니다.")) {
           modal.style.display = "none";
+          document.getElementById("newEmail").value = "";
           document.getElementById("newEmail").focus();
+        } else if (data.message.includes("인증코드가 전송되었습니다.")) {
+          document.getElementById("verificationCodeText").value = "";
+          document.getElementById("verificationCodeText").focus();
         }
       }
     })

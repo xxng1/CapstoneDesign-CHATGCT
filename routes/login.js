@@ -99,8 +99,8 @@ router.get("/register", (request, response) => {
   });
 });
 
-// 회원가입, 인증코드 생성 및 보내기
-router.post("/send_code", (request, response) => {
+//회원가입을 위한 인증코드 생성 및 보내기, 학번, 아이디 중복 제거
+router.post("/send_code", async (request, response) => {
   var userData = request.body;
 
   // 인증 코드 생성
@@ -109,72 +109,80 @@ router.post("/send_code", (request, response) => {
   // 이메일 인증 코드 발송
   sendVerificationCode(userData.loginid, verificationCode);
 
-  // Check if loginid already exists
-  db.query(
-    `SELECT * FROM user WHERE loginid = ?`,
-    [userData.loginid],
-    function (error, result) {
-      if (error) {
-        throw error;
-      }
-      if (result.length > 0) {
+  try {
+    const studentNumResult = await db
+      .promise()
+      .query(`SELECT * FROM user WHERE studentnum = ?`, [userData.studentnum]);
+
+    if (studentNumResult[0].length > 0) {
+      if (studentNumResult[0][0].verified === 1) {
+        response
+          .status(200)
+          .json({ message: userData.studentnum + "은 사용 중인 학번입니다." });
+        return;
+      } else {
+        await db
+          .promise()
+          .query(`DELETE FROM user WHERE studentnum = ?`, [
+            userData.studentnum,
+          ]);
         response
           .status(200)
           .json({
-            message: userData.loginid + "은 이미 존재하는 아이디입니다."
+            message: "인증이 안된 사용자입니다. 회원 가입을 다시 진행해주세요.",
+            redirect: "/login/join",
           });
         return;
       }
-
-      // Check if studentnum already exists
-      db.query(
-        `SELECT * FROM user WHERE studentnum = ?`,
-        [userData.studentnum],
-        function (error, result) {
-          if (error) {
-            throw error;
-          }
-          if (result.length > 0) {
-            response
-              .status(200)
-              .json({
-                message: userData.studentnum + "은 이미 존재하는 학번입니다."
-              });
-            return;
-          }
-
-          // 데이터베이스에 회원 정보 저장
-          db.query(
-            `
-            INSERT INTO user (loginid, password, name, subject, studentnum, class, verificationCode, verified)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            `,
-            [
-              userData.loginid,
-              userData.password,
-              userData.name,
-              userData.subject,
-              userData.studentnum,
-              userData.class,
-              verificationCode,
-              0,
-            ],
-            function (error, result) {
-              if (error) {
-                throw error;
-              }
-              // 인증코드를 보낸 경우
-              response
-                .status(200)
-                .json({
-                  message: userData.loginid + "로 인증코드를 보냈습니다.",
-                });
-            }
-          );
-        }
-      );
     }
-  );
+
+    const loginIdResult = await db
+      .promise()
+      .query(`SELECT * FROM user WHERE loginid = ?`, [userData.loginid]);
+
+    if (loginIdResult[0].length > 0) {
+      if (loginIdResult[0][0].verified === 1) {
+        response
+          .status(200)
+          .json({ message: userData.loginid + "은 사용 중인 아이디입니다." });
+        return;
+      } else {
+        await db
+          .promise()
+          .query(`DELETE FROM user WHERE loginid = ?`, [userData.loginid]);
+        response
+          .status(200)
+          .json({
+            message: "인증이 안된 사용자입니다. 회원 가입을 다시 진행해주세요.",
+            redirect: "/login/join",
+          });
+        return;
+      }
+    }
+
+    await db.promise().query(
+      `
+      INSERT INTO user (loginid, password, name, subject, studentnum, class, verificationCode, verified)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      `,
+      [
+        userData.loginid,
+        userData.password,
+        userData.name,
+        userData.subject,
+        userData.studentnum,
+        userData.class,
+        verificationCode,
+        0,
+      ]
+    );
+
+    response
+      .status(200)
+      .json({ message: userData.loginid + "로 인증코드를 보냈습니다." });
+  } catch (error) {
+    throw error;
+  }
 });
 
 // 인증코드 확인
@@ -204,11 +212,9 @@ router.post("/register_process", (request, response) => {
               throw error;
             }
 
-            response
-              .status(200)
-              .json({
-                message: "인증코드가 일치하지 않습니다. 다시 해보세요."
-              });
+            response.status(200).json({
+              message: "인증코드가 일치하지 않습니다. 다시 해보세요.",
+            });
           }
         );
       } else {
@@ -233,12 +239,10 @@ router.post("/register_process", (request, response) => {
             request.session.class = user.class;
             request.session.studentnum = user.studentnum;
 
-            response
-              .status(200)
-              .json({
-                message: "축하합니다.^@^ " + name + "님, 가입 되었습니다.",
-                redirect: "/",
-              });
+            response.status(200).json({
+              message: "축하합니다.^@^ " + name + "님, 가입 되었습니다.",
+              redirect: "/",
+            });
           }
         );
       }
@@ -265,7 +269,7 @@ router.post("/login_process", (request, response) => {
       // ID가 DB에 없는 경우
       if (result.length === 0) {
         response.status(200).json({
-          message: loginid + "와 일치하는 아이디가 없습니다."
+          message: loginid + "와 일치하는 아이디가 없습니다.",
         });
       } else {
         // ID가 DB에 있는 경우
@@ -288,18 +292,17 @@ router.post("/login_process", (request, response) => {
               response.status(200).json({
                 message:
                   loginid +
-                  "는 인증이 안된 아이디 입니다. 삭제 됩니다. 회원가입을 해주세요.", redirect:"/login/join"
+                  "는 인증이 안된 아이디 입니다. 삭제 됩니다. 회원가입을 해주세요.",
+                redirect: "/login/join",
               });
             }
           );
         } else {
           // 비밀번호 확인
           if (user.password !== password) {
-            response
-              .status(200)
-              .json({
-                message: "비밀번호가 일치하지 않습니다."
-              });
+            response.status(200).json({
+              message: "비밀번호가 일치하지 않습니다.",
+            });
           } else {
             request.session.is_logined = true;
             request.session.login_id = user.loginid;

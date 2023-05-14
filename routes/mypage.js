@@ -81,31 +81,20 @@ router.get("/withdraw/", (req, res) => {
   res.render("user/withdraw.ejs", { user: "" });
 });
 
-//아이디 변경하기
+// 아이디 변경하기
 router.post("/change_id/changeId_process", (req, res) => {
-  if (req.session.login_id) {
+  if (req.session.studentnum) {
     // 새로운 이메일
     var newEmail = req.body.newEmail;
 
-    // 이미 존재하는 아이디인지 확인
     db.query(
-      `
-      SELECT COUNT(*) AS count FROM user WHERE loginid = ?
-      `,
-      [newEmail],
-      function (error, result) {
-        if (error) {
-          throw error;
-        }
+      "SELECT * FROM user WHERE studentnum = ?",
+      [req.session.studentnum],
+      (err, rows) => {
+        if (err) throw err;
+        const user = rows[0];
 
-        if (result[0].count > 0) {
-          // 이미 존재하는 아이디인 경우
-          res
-            .status(200)
-            .json({
-              message: newEmail + "은 이미 사용 중인 아이디입니다."
-            });
-        } else {
+        if (user.verified === 0) {
           // 인증 코드 생성
           const verificationCode = generateVerificationCode();
 
@@ -114,28 +103,45 @@ router.post("/change_id/changeId_process", (req, res) => {
 
           // 기존 아이디를 새로운 이메일로 변경 및 인증 상태 업데이트
           db.query(
-            `
-            UPDATE user SET verificationCode = ?, loginid = ?, verified = false WHERE loginid = ?
-            `,
-            [verificationCode, newEmail, req.session.login_id],
-            function (error, result) {
-              if (error) {
-                throw error;
-              }
-
-              // 인증코드를 보낸 경우
-              res
-                .status(200)
-                .json({ message: newEmail + "로 인증코드를 보냈습니다." });
+            "UPDATE user SET verificationCode = ? WHERE studentnum = ?",
+            [verificationCode, req.session.studentnum],
+            (err, result) => {
+              if (err) throw err;
+              // 아직 인증되지 않은 사용자에게 메시지 전송
+              return res.json({message: `인증코드를 ${user.loginid}로 보냈습니다. 진행하던 인증을 마무리하세요.`});
             }
           );
+        }
+
+        if (user.verified === 1) {
+          // 이미 인증된 사용자의 경우
+          if (newEmail === user.loginid) {
+            // 새 이메일이 현재 로그인 아이디와 같다면
+            return res.json({message:`${user.loginid}은 이미 사용중인 아이디 입니다.`});
+          } else {
+            // 인증 코드 생성
+            const verificationCode = generateVerificationCode();
+
+            // 이메일 인증 코드 발송
+            sendVerificationCode(newEmail, verificationCode);
+
+            // 기존 아이디를 새로운 이메일로 변경 및 인증 상태 업데이트
+            db.query(
+              "UPDATE user SET verificationCode = ?, loginid = ?, verified = 0 WHERE studentnum = ?",
+              [verificationCode, newEmail, req.session.studentnum],
+              (err, result) => {
+                if (err) throw err;
+                return res.json({message: "인증코드가 전송되었습니다."});
+              }
+            );
+          }
         }
       }
     );
   }
 });
 
-//새로운 아이디 인증하기
+//변경된 새로운 아이디 인증하기
 router.post("/change_id/verify", (req, res) => {
   if (req.session.studentnum) {
     // Get the provided verification code from the request body
@@ -181,14 +187,12 @@ router.post("/change_id/verify", (req, res) => {
 
                   // Update the session login_id after fetching the new loginid
                   req.session.login_id = results[0].loginid;
-
-                  res
-                    .status(200)
-                    .json({
-                      message:
-                        results[0].loginid + "로 아이디 변경이 인증되었습니다.",
-                      redirect: "/mypage",
-                    });
+                  
+                  res.status(200).json({
+                    message:
+                      results[0].loginid + "로 아이디 변경이 인증되었습니다.",
+                    redirect: "/mypage",
+                  });
                 }
               );
             }
@@ -219,11 +223,9 @@ router.post("/change_id/verify", (req, res) => {
                   // Update the session login_id after fetching the new loginid
                   req.session.login_id = results[0].loginid;
 
-                  res
-                    .status(200)
-                    .json({
-                      message: "인증코드가 일치하지 않습니다."
-                    });
+                  res.status(200).json({
+                    message: "인증코드가 일치하지 않습니다. 아이디 변경이 없습니다."
+                  });
                 }
               );
             }
@@ -257,7 +259,7 @@ router.post("/change_pw/change_password", function (req, res) {
           res.status(200).json({
             message:
               name +
-              "님, 새로운 비밀번호는 현재 비밀번호와 다르게 설정해야 합니다."
+              "님, 새로운 비밀번호는 현재 비밀번호와 다르게 설정해야 합니다.",
           });
         } else {
           db.query(
@@ -271,12 +273,10 @@ router.post("/change_pw/change_password", function (req, res) {
               }
 
               // 비밀번호 변경에 성공한 경우
-              res
-                .status(200)
-                .json({
-                  message: name + "님, 비밀번호가 성공적으로 변경되었습니다.",
-                  redirect: "/mypage",
-                });
+              res.status(200).json({
+                message: name + "님, 비밀번호가 성공적으로 변경되었습니다.",
+                redirect: "/mypage",
+              });
             }
           );
         }
@@ -326,11 +326,9 @@ router.post("/withdraw/withdraw_process", function (req, res) {
           );
         } else {
           // 비밀번호가 일치하지 않으면 오류 메시지 전송
-          res
-            .status(200)
-            .json({
-              message: username + "님의 비밀번호가 일치하지 않습니다."
-            });
+          res.status(200).json({
+            message: username + "님의 비밀번호가 일치하지 않습니다.",
+          });
         }
       }
     );

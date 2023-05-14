@@ -67,6 +67,7 @@ function handleSubmit(event, url) {
       } else {
         alert(data.message);
         if (data.message.includes("님의 비밀번호가 일치하지 않습니다.")) {
+          document.getElementById('pw').value="";
           document.getElementById('pw').focus(); 
         }
       }

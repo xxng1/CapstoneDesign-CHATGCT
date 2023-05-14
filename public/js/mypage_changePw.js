@@ -67,6 +67,7 @@ function isValidPassword(changepw) {
         } else {
           alert(data.message);
           if (data.message.includes("님, 새로운 비밀번호는 현재 비밀번호와 다르게 설정해야 합니다.")) {
+            document.getElementById('changepw').value="";
             document.getElementById('changepw').focus();
           } 
         }

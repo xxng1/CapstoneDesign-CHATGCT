@@ -83,8 +83,10 @@ function handleSubmit(event, url) {
       } else {
         alert(data.message);
         if (data.message.includes("비밀번호가 일치하지 않습니다.")) {
+          document.getElementById('password').value="";
           document.getElementById('password').focus(); 
         } else if (data.message.includes("와 일치하는 아이디가 없습니다.")) {
+          document.getElementById('username').value="";
           document.getElementById('username').focus();
         }
       }

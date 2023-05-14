@@ -66,6 +66,7 @@
               type="text"
               style="width: 160%; padding: 0.5em"
               name="name"
+              id="name"
               placeholder="이름"
               maxlength="20"
               required
@@ -83,6 +84,7 @@
               type="text"
               style="width: 160%; padding: 0.5em"
               name="subject"
+              id="major"
               placeholder="학과"
               maxlength="20"
               required
@@ -93,9 +95,15 @@
               style="width: 160%; padding: 0.5em"
               name="loginid"
               id="loginid"
+              list="options"
               placeholder="example@email.com"
               required
             />
+            <!-- <datalist id="options">
+              <option value="@gmail.com">@gmail.com</option>
+              <option value="@naver.com">@naver.com</option>
+              <option value="@yahoo.net">@yahoo.net</option>
+            </datalist> -->
             <input
               type="password"
               style="width: 160%; padding: 0.5em"
