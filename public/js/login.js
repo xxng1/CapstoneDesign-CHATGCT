@@ -1,3 +1,9 @@
+function isValidEmail(username) {
+  // 이메일은 일반적으로 local-part@domain 형식을 따릅니다.
+  var pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return pattern.test(username);
+}
+
 function isValidPassword(password) {
   // 비밀번호는 8~20자의 영문 대소문자, 숫자, 특수문자(!, @, #, $, %, ^, &, *)를 사용하며, 모두 포함해야 합니다.
   var pattern =
@@ -5,6 +11,7 @@ function isValidPassword(password) {
   if (!pattern.test(password)) {
     return false;
   }
+
   var count = 0;
   if (password.match(/[a-z]/)) count++;
   if (password.match(/[A-Z]/)) count++;
@@ -14,7 +21,14 @@ function isValidPassword(password) {
 }
 
 function validate() {
+
+  var username = document.forms[0]["id"].value;
   var password = document.forms[0]["pw"].value;
+
+  if (!isValidEmail(username)) {
+    alert("유효한 이메일 주소를 입력해주세요.");
+    return false;
+  }
 
   if (!isValidPassword(password)) {
     alert(
