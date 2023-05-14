@@ -61,14 +61,16 @@ function handleSubmit(event, url) {
       return response.json();
     })
     .then(data => {
-      alert(data.message);
       if (data.redirect) {
+        alert(data.message);
         window.location.href = data.redirect;
       } else {
         alert(data.message);
-        window.location.href = "/mypage/"
+        if (data.message.includes("님의 비밀번호가 일치하지 않습니다.")) {
+          document.getElementById('pw').focus(); 
+        }
       }
-    })
+    })    
     .catch((error) => {
       console.error(
         "There has been a problem with your fetch operation:",

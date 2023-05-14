@@ -54,12 +54,21 @@ function handleSubmit(event, url) {
       }
       return response.json();
     })
-    .then((data) => {
-      alert(JSON.stringify(data.message));
+    .then(data => {
       if (data.redirect) {
+        alert(data.message);
         window.location.href = data.redirect;
+      } else {
+        alert(data.message);
+        if (data.message.includes("은 이미 사용 중인 아이디입니다.")) {
+          modal.style.display = "none";
+          document.getElementById('newEmail').focus();
+        } else if (data.message.includes("인증코드가 일치하지 않습니다.")) {
+          modal.style.display = "none";
+          document.getElementById('newEmail').focus();
+        }
       }
-    })    
+    })
     .catch((error) => {
       console.error(
         "There has been a problem with your fetch operation:",

@@ -100,7 +100,11 @@ router.post("/change_id/changeId_process", (req, res) => {
 
         if (result[0].count > 0) {
           // 이미 존재하는 아이디인 경우
-          res.status(200).json({ message: newEmail + "은 이미 사용 중인 아이디입니다.", redirect: "/mypage/change_id" });
+          res
+            .status(200)
+            .json({
+              message: newEmail + "은 이미 사용 중인 아이디입니다."
+            });
         } else {
           // 인증 코드 생성
           const verificationCode = generateVerificationCode();
@@ -120,7 +124,9 @@ router.post("/change_id/changeId_process", (req, res) => {
               }
 
               // 인증코드를 보낸 경우
-              res.status(200).json({ message: newEmail + "로 인증코드를 보냈습니다." });
+              res
+                .status(200)
+                .json({ message: newEmail + "로 인증코드를 보냈습니다." });
             }
           );
         }
@@ -175,11 +181,14 @@ router.post("/change_id/verify", (req, res) => {
 
                   // Update the session login_id after fetching the new loginid
                   req.session.login_id = results[0].loginid;
-                  console.log(req.session.login_id);
 
                   res
                     .status(200)
-                    .json({ message: results[0].loginid + "로 아이디 변경이 인증되었습니다.", redirect: "/mypage" });
+                    .json({
+                      message:
+                        results[0].loginid + "로 아이디 변경이 인증되었습니다.",
+                      redirect: "/mypage",
+                    });
                 }
               );
             }
@@ -209,12 +218,12 @@ router.post("/change_id/verify", (req, res) => {
 
                   // Update the session login_id after fetching the new loginid
                   req.session.login_id = results[0].loginid;
-                  console.log(req.session.login_id);
 
                   res
                     .status(200)
-                    .json({ message: "인증코드가 일치하지 않습니다.", redirect: "/mypage/change_id" });
-                    
+                    .json({
+                      message: "인증코드가 일치하지 않습니다."
+                    });
                 }
               );
             }
@@ -245,9 +254,10 @@ router.post("/change_pw/change_password", function (req, res) {
 
         // 현재 비밀번호와 새 비밀번호가 동일한지 확인
         if (currentPassword === newpw) {
-          res.status(200).json({ 
-            message: name + "님, 새로운 비밀번호는 현재 비밀번호와 다르게 설정해야 합니다.", 
-            redirect: "/mypage/change_pw" 
+          res.status(200).json({
+            message:
+              name +
+              "님, 새로운 비밀번호는 현재 비밀번호와 다르게 설정해야 합니다."
           });
         } else {
           db.query(
@@ -263,7 +273,10 @@ router.post("/change_pw/change_password", function (req, res) {
               // 비밀번호 변경에 성공한 경우
               res
                 .status(200)
-                .json({ message: name + "님, 비밀번호가 성공적으로 변경되었습니다.", redirect: "/mypage" });
+                .json({
+                  message: name + "님, 비밀번호가 성공적으로 변경되었습니다.",
+                  redirect: "/mypage",
+                });
             }
           );
         }
@@ -285,7 +298,7 @@ router.post("/withdraw/withdraw_process", function (req, res) {
         if (error) throw error;
 
         // 데이터베이스에서 가져온 비밀번호와 사용자가 입력한 비밀번호 비교
-        let username = results[0].name;  // 이동한 위치
+        let username = results[0].name; // 이동한 위치
         if (results[0].password === pw) {
           // 비밀번호가 일치하면 사용자 삭제 전에 사용자 이름 저장
           // let username = results[0].name;  // 원래 위치
@@ -315,12 +328,13 @@ router.post("/withdraw/withdraw_process", function (req, res) {
           // 비밀번호가 일치하지 않으면 오류 메시지 전송
           res
             .status(200)
-            .json({ message: username + "님의 비밀번호가 일치하지 않습니다.", redirect: "/mypage/withdraw" });
+            .json({
+              message: username + "님의 비밀번호가 일치하지 않습니다."
+            });
         }
       }
     );
   }
 });
-
 
 module.exports = router;

@@ -99,12 +99,27 @@ function handleSubmit(event, url) {
       }
       return response.json();
     })
-    .then((data) => {
-      alert(data.message);
+    .then(data => {
       if (data.redirect) {
+        alert(data.message);
         window.location.href = data.redirect;
+      } else {
+        alert(data.message);
+        if (data.message.includes("은 이미 존재하는 아이디입니다.")) {
+          // userData.loginid에 관련된 메시지인 경우
+          document.getElementById('loginid').focus(); 
+          modal.style.display = "none";
+        } else if (data.message.includes("은 이미 존재하는 학번입니다.")) {
+          // userData.studentnum에 관련된 메시지인 경우
+          document.getElementById('studentnum').focus();
+          modal.style.display = "none";
+        } else if (data.message.includes("인증코드가 일치하지 않습니다. 다시 해보세요.")) {
+          // userData.studentnum에 관련된 메시지인 경우
+          document.getElementById('loginid').focus();
+          modal.style.display = "none";
+        }
       }
-    })
+    })    
     .catch((error) => {
       console.error(
         "There has been a problem with your fetch operation:",

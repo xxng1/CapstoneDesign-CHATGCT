@@ -77,14 +77,18 @@ function handleSubmit(event, url) {
       return response.json();
     })
     .then(data => {
-        if (data.redirect) {
-          alert(data.message);
-          window.location.href = data.redirect;
-        } else {
-          alert(data.message);
-          
+      if (data.redirect) {
+        alert(data.message);
+        window.location.href = data.redirect;
+      } else {
+        alert(data.message);
+        if (data.message.includes("비밀번호가 일치하지 않습니다.")) {
+          document.getElementById('password').focus(); 
+        } else if (data.message.includes("와 일치하는 아이디가 없습니다.")) {
+          document.getElementById('username').focus();
         }
-      })
+      }
+    })
     .catch((error) => {
       console.error(
         "There has been a problem with your fetch operation:",

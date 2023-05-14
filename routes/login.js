@@ -121,8 +121,7 @@ router.post("/send_code", (request, response) => {
         response
           .status(200)
           .json({
-            message: userData.loginid + "은 이미 존재하는 아이디입니다.",
-            redirect: "/login/join",
+            message: userData.loginid + "은 이미 존재하는 아이디입니다."
           });
         return;
       }
@@ -139,8 +138,7 @@ router.post("/send_code", (request, response) => {
             response
               .status(200)
               .json({
-                message: userData.studentnum + "은 이미 존재하는 학번입니다.",
-                redirect: "/login/join",
+                message: userData.studentnum + "은 이미 존재하는 학번입니다."
               });
             return;
           }
@@ -209,8 +207,7 @@ router.post("/register_process", (request, response) => {
             response
               .status(200)
               .json({
-                message: "인증코드가 일치하지 않습니다. 다시 해보세요.",
-                redirect: "/login/join",
+                message: "인증코드가 일치하지 않습니다. 다시 해보세요."
               });
           }
         );
@@ -268,8 +265,7 @@ router.post("/login_process", (request, response) => {
       // ID가 DB에 없는 경우
       if (result.length === 0) {
         response.status(200).json({
-          message: loginid + "와 일치하는 아이디가 없습니다.",
-          redirect: "/login",
+          message: loginid + "와 일치하는 아이디가 없습니다."
         });
       } else {
         // ID가 DB에 있는 경우
@@ -292,8 +288,7 @@ router.post("/login_process", (request, response) => {
               response.status(200).json({
                 message:
                   loginid +
-                  "는 인증이 안된 아이디 입니다. 삭제 됩니다. 회원가입을 해주세요.",
-                redirect: "/login",
+                  "는 인증이 안된 아이디 입니다. 삭제 됩니다. 회원가입을 해주세요.", redirect:"/login/join"
               });
             }
           );
@@ -303,8 +298,7 @@ router.post("/login_process", (request, response) => {
             response
               .status(200)
               .json({
-                message: "비밀번호가 일치하지 않습니다.",
-                redirect: "/login",
+                message: "비밀번호가 일치하지 않습니다."
               });
           } else {
             request.session.is_logined = true;

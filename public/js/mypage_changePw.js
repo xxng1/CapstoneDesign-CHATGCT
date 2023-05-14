@@ -60,12 +60,17 @@ function isValidPassword(changepw) {
         }
         return response.json();
       })
-      .then((data) => {
-        alert(JSON.stringify(data.message));
+      .then(data => {
         if (data.redirect) {
+          alert(data.message);
           window.location.href = data.redirect;
+        } else {
+          alert(data.message);
+          if (data.message.includes("님, 새로운 비밀번호는 현재 비밀번호와 다르게 설정해야 합니다.")) {
+            document.getElementById('changepw').focus();
+          } 
         }
-      }) 
+      })       
       .catch((error) => {
         console.error(
           "There has been a problem with your fetch operation:",
