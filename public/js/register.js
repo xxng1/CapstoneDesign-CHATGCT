@@ -59,7 +59,6 @@ function validate() {
 
 // 모달 창 표시
 var modal = document.getElementById("verificationModal");
-var closeBtn = document.getElementsByClassName("close")[0];
 var register = document.getElementById("register");
 
 register.onclick = function (event) {
@@ -68,10 +67,6 @@ register.onclick = function (event) {
     return;
   }
   modal.style.display = "block";
-};
-
-closeBtn.onclick = function () {
-  modal.style.display = "none";
 };
 
 // 인증코드 요청에 대한 응답을 alert 창에 표시
@@ -99,7 +94,7 @@ function handleSubmit(event, url) {
       }
       return response.json();
     })
-    .then(data => {
+    .then((data) => {
       if (data.redirect) {
         alert(data.message);
         window.location.href = data.redirect;
@@ -107,19 +102,21 @@ function handleSubmit(event, url) {
         alert(data.message);
         if (data.message.includes("은 이미 존재하는 아이디입니다.")) {
           // userData.loginid에 관련된 메시지인 경우
-          document.getElementById('loginid').focus(); 
+          document.getElementById("loginid").focus();
           modal.style.display = "none";
         } else if (data.message.includes("은 이미 존재하는 학번입니다.")) {
           // userData.studentnum에 관련된 메시지인 경우
-          document.getElementById('studentnum').focus();
+          document.getElementById("studentnum").focus();
           modal.style.display = "none";
-        } else if (data.message.includes("인증코드가 일치하지 않습니다. 다시 해보세요.")) {
+        } else if (
+          data.message.includes("인증코드가 일치하지 않습니다. 다시 해보세요.")
+        ) {
           // userData.studentnum에 관련된 메시지인 경우
-          document.getElementById('loginid').focus();
+          document.getElementById("loginid").focus();
           modal.style.display = "none";
         }
       }
-    })    
+    })
     .catch((error) => {
       console.error(
         "There has been a problem with your fetch operation:",

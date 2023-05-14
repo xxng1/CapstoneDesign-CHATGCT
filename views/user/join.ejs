@@ -123,16 +123,16 @@
     </div>
     <div id="verificationModal" class="modal">
       <div class="modal-content">
-        <span class="close">&times;</span>
-        <h5>인증 코드 입력</h5>
+        <h5 class="verificationCodeText">인증 코드 입력</h5>
         <form id="verificationCode" onsubmit="return validate()">
           <input
             type="text"
+            class="verificationCodeBox"
             name="verificationCode"
             placeholder="인증 코드"
             required
           />
-          <button type="submit">확인</button>
+          <button type="submit" class="submitButton">확인</button>
         </form>
       </div>
     </div>

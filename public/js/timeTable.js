@@ -84,6 +84,7 @@ function buildTimeTable(courseData) {
     }
   });
 }
+//-----------------------------------------------------------------------------------------------------------------------
 
 //모달창 생성 함수
 function showModal(course) {
@@ -96,19 +97,27 @@ function showModal(course) {
   // Create elements to display course information
   const heading = document.createElement("h2");
   heading.textContent = "강의 정보";
+  heading.classList.add("heading");
+
+  const modalText = document.createElement("p");
+  modalText.textContent = "해당과목을 시간표에 추가할까요?";
+  modalText.classList.add("modalText");
 
   const table = document.createElement("table");
-  table.classList.add("course-info-table");
+  table.classList.add("addCourseTable");
 
   // Create table rows for each course property
   for (const key in course) {
     const row = document.createElement("tr");
+    row.classList.add("tableRow");
 
     const labelCell = document.createElement("td");
     labelCell.textContent = key;
+    labelCell.classList.add("labelCell");
 
     const valueCell = document.createElement("td");
     valueCell.textContent = course[key];
+    valueCell.classList.add("valueCell");
 
     row.appendChild(labelCell);
     row.appendChild(valueCell);
@@ -118,24 +127,33 @@ function showModal(course) {
 
   modalContent.appendChild(heading);
   modalContent.appendChild(table);
+  modalContent.appendChild(modalText);
 
   // 버튼 요소 추가
   const yesButton = document.createElement("button");
   yesButton.id = "yes-btn";
   yesButton.textContent = "네";
+  yesButton.classList.add("yesButton");
 
   const noButton = document.createElement("button");
   noButton.id = "no-btn";
   noButton.textContent = "아니오";
-
-  const closeButton = document.createElement("span");
-  closeButton.className = "close";
-  closeButton.innerHTML = "&times;";
-  closeButton.textContent = "×";
+  noButton.classList.add("noButton");
 
   modalContent.appendChild(yesButton);
   modalContent.appendChild(noButton);
-  modalContent.appendChild(closeButton);
+
+  noButton.addEventListener("click", () => {
+    // 아니오 버튼이 클릭된 경우 모달창 닫기
+    modal.style.display = "none";
+  });
+
+  // 모달창 외부 클릭 이벤트 리스너 추가
+  window.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  });
 
   //네 버튼 클릭 경우 실행 함수
   yesButton.addEventListener("click", (event) => {
@@ -254,23 +272,6 @@ function showModal(course) {
     }
 
     modal.style.display = "none";
-  });
-
-  noButton.addEventListener("click", () => {
-    // 아니오 버튼이 클릭된 경우 모달창 닫기
-    modal.style.display = "none";
-  });
-
-  closeButton.addEventListener("click", () => {
-    // x 버튼이 클릭된 경우 모달창 닫기
-    modal.style.display = "none";
-  });
-
-  // 모달창 외부 클릭 이벤트 리스너 추가
-  window.addEventListener("click", (event) => {
-    if (event.target === modal) {
-      modal.style.display = "none";
-    }
   });
 
   // 모달창 띄우기
@@ -409,17 +410,14 @@ document.addEventListener("DOMContentLoaded", () => {
 // 모달창을 생성하는 함수
 function showModalDelete(cell) {
   const modal = document.querySelector("#modal1");
-  const modalContent = modal.querySelector(".modal-content");
+  const modalContent = modal.querySelector(".modal-content1");
 
   // Clear previous content
   modalContent.innerHTML = "";
 
-  // Create elements to display course information
-  const heading = document.createElement("h2");
-  heading.textContent = "강의 정보";
-
   const courseName = document.createElement("p");
-  courseName.textContent = `교과목명: ${cell.textContent}`;
+  courseName.textContent = `"${cell.textContent}"이 시간표에서 삭제됩니다.`;
+  courseName.classList.add("heading");
 
   // Create delete button
   const deleteButton = document.createElement("button");
@@ -428,14 +426,11 @@ function showModalDelete(cell) {
     deleteCourse(cell);
     modal.style.display = "none"; // 모달창 닫기
   });
+  deleteButton.classList.add("deleteButton");
 
   // Add elements to modal content
-  modalContent.appendChild(heading);
   modalContent.appendChild(courseName);
   modalContent.appendChild(deleteButton);
-
-  // Display the modal
-  modal.style.display = "block";
 
   // 모달창 외부 클릭 이벤트 리스너 추가
   window.addEventListener("click", (event) => {
@@ -443,6 +438,9 @@ function showModalDelete(cell) {
       modal.style.display = "none";
     }
   });
+
+  // Display the modal
+  modal.style.display = "block";
 }
 
 // 강의를 삭제하는 함수

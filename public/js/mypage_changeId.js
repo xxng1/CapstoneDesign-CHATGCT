@@ -18,7 +18,6 @@ function validate() {
 
 // 모달 창 표시
 var modal = document.getElementById("verificationModal");
-var closeBtn = document.getElementsByClassName("close")[0];
 var newEmailBtn = document.getElementById("newEmailBtn");
 
 newEmailBtn.addEventListener("click", function (event) {
@@ -28,10 +27,6 @@ newEmailBtn.addEventListener("click", function (event) {
   }
   modal.style.display = "block";
 });
-
-closeBtn.onclick = function () {
-  modal.style.display = "none";
-};
 
 // 인증코드 요청에 대한 응답을 alert 창에 표시
 function handleSubmit(event, url) {
@@ -54,7 +49,7 @@ function handleSubmit(event, url) {
       }
       return response.json();
     })
-    .then(data => {
+    .then((data) => {
       if (data.redirect) {
         alert(data.message);
         window.location.href = data.redirect;
@@ -62,10 +57,10 @@ function handleSubmit(event, url) {
         alert(data.message);
         if (data.message.includes("은 이미 사용 중인 아이디입니다.")) {
           modal.style.display = "none";
-          document.getElementById('newEmail').focus();
+          document.getElementById("newEmail").focus();
         } else if (data.message.includes("인증코드가 일치하지 않습니다.")) {
           modal.style.display = "none";
-          document.getElementById('newEmail').focus();
+          document.getElementById("newEmail").focus();
         }
       }
     })

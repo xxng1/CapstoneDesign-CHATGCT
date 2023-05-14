@@ -36,13 +36,19 @@
             </button></a
           > -->
           <a href="/login/logout"
-            ><button class="logbtn" id="logoutbtn" style="display: inline-block;">로그아웃</button></a
+            ><button
+              class="logbtn"
+              id="logoutbtn"
+              style="display: inline-block"
+            >
+              로그아웃
+            </button></a
           >
           <div class="panelbtn">
-            <a href="/mypage/" id="mypagebtn" 
+            <a href="/mypage/" id="mypagebtn"
               ><button class="panelbtn1">내 정보</button></a
             >
-            <a href="/timetable/" id="timetablebtn" 
+            <a href="/timetable/" id="timetablebtn"
               ><button class="panelbtn1">시간표</button></a
             >
           </div>
@@ -62,27 +68,25 @@
               name="newEmail"
               style="width: 160%; padding: 0.5em"
             />
-            <button 
-              type="submit"
-              id="newEmailBtn"
-              class="id_change">아이디 변경</button>
+            <button type="submit" id="newEmailBtn" class="id_change">
+              아이디 변경
+            </button>
           </form>
-          
         </div>
       </div>
     </div>
     <div id="verificationModal" class="modal">
       <div class="modal-content">
-        <span class="close">&times;</span>
-        <h5>인증 코드 입력</h5>
+        <h5 class="verificationCodeText">인증 코드 입력</h5>
         <form id="verificationCode">
           <input
             type="text"
+            class="verificationCode"
             name="verificationCode"
             placeholder="인증 코드"
             required
           />
-          <button type="submit">확인</button>
+          <button type="submit" class="submitButton">확인</button>
         </form>
       </div>
     </div>
