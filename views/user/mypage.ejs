@@ -12,6 +12,45 @@
     />
   </head>
   <body>
+    <%
+  // 로그인한 사용자의 ID 값을 loginid 변수에 저장
+  var loginid = loginid;
+
+  // results 배열을 loginid 값을 기준으로 오름차순 정렬
+  results.sort(function(a, b) {
+    return a.loginid.localeCompare(b.loginid);
+  });
+
+  var start = 0;
+  var end = results.length - 1;
+  var middle;
+
+  // 이진 검색(binary search) 알고리즘을 활용하여
+  // loginid 값이 일치하는 요소를 찾음
+  while (start <= end) {
+    middle = Math.floor((start + end) / 2);
+    if (results[middle].loginid < loginid) {
+      start = middle + 1;
+    } else if (results[middle].loginid > loginid) {
+      end = middle - 1;
+    } else {
+      break;
+    }
+  }
+
+  // loginid 값이 일치하는 요소가 존재하는 경우 해당 요소의 name 값을 출력
+  if (results[middle] && results[middle].loginid === loginid) {
+    var name = results[middle].name;
+    var subject = results[middle].subject;
+    var studentnum = results[middle].studentnum;
+  } else {
+    // loginid 값이 일치하는 요소가 존재하지 않는 경우 name 변수를 빈 문자열로 초기화
+    var name = "";
+    var subject = "";
+    var studentnum = 0;
+  }
+%>
+
 
     <ul class="navbar">
       <li class="nav-item" style="min-height: 45px">
@@ -53,9 +92,10 @@
       <div class="box" style="margin-bottom: 20px; margin-top: 20px">
         <div class="info">
           <h4>내 정보</h4>
-          <button class="edit" id="button1" onclick="enableInput()">
+          <a href="/mypage/change_id/"><button class="edit" id="button1" onclick="enableInput()">
             정보수정
           </button>
+        </a>
           <button
             class="edit"
             id="button2"
@@ -69,23 +109,17 @@
           <div>
             <input
               type="email"
-              id="email"
-              name="email"
-              placeholder="이메일"
               style="width: 140%; padding: 0.5em"
               disabled
-              value="<%=loginid%>"
+              value="아이디 | <%=loginid%>"
             />
           </div>
           <div>
             <input
               type="text"
-              id="name"
-              name="name"
-              placeholder="이름/학번"
               style="width: 140%; padding: 0.5em"
               disabled
-              value=" - "
+              value="학과 학번 이름 | <%=subject%> <%=studentnum%> <%=name%>"
             />
           </div>
         </form>
@@ -110,3 +144,4 @@
     <script src="../js/panel.js"></script>
   </body>
 </html>
+
