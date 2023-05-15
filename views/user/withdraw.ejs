@@ -52,7 +52,7 @@
       <div class="box" style="margin-bottom: 20px; margin-top: 20px">
         <div class="info">
           <h4 style="margin-bottom: 30px">회원탈퇴</h4>
-          <form action="/mypage/withdraw_process" method="post">
+          <form id="withdraw_process" onsubmit="return validate()">
             <h5>계정 비밀번호</h5>
             <input 
             type="password" 
@@ -70,5 +70,6 @@
     </div>
 
     <script src="/js/panel.js"></script>
+    <script src="/js/mypage_withdraw.js"></script>
   </body>
 </html>

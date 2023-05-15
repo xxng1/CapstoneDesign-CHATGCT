@@ -1,6 +1,6 @@
 const express = require("express");
-const {spawn} = require("child_process")
-const pyProg = spawn('python', ['Tokenizer.py']);
+const { spawn } = require("child_process");
+const pyProg = spawn("python", ["Tokenizer.py"]);
 const app = express();
 
 var session = require("express-session");
@@ -58,12 +58,12 @@ server.listen(PORT, () => {
 io.on("connection", (socket) => {
   socket.on("chatting", (data) => {
     const { name, msg } = data;
-    pyProg.stdin.write(msg + "\n")
+    pyProg.stdin.write(msg + "\n");
 
-    let result = []
+    let result = [];
 
     pyProg.stdout.on("data", (data) => {
-      const lines = data.toString().split('\n');
+      const lines = data.toString().split("\n");
       lines.forEach((line) => {
         result.push(line.trim());
       });
@@ -71,15 +71,12 @@ io.on("connection", (socket) => {
     pyProg.stdout.on("end", () => {
       io.emit("chatting", {
         name,
-        msg ,
+        msg,
         time: moment(new Date()).format("h:mm A"),
-        chat_response : result[0],
-        chat_url : result[1],
+        chat_response: result[0],
+        chat_url: result[1],
       });
       result = [];
     });
   });
 });
-
-
-
