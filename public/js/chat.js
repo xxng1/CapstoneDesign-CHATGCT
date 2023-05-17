@@ -75,6 +75,6 @@ function Chatbot(name, msg, msg2, time) {
 
     li.innerHTML = dom;
     chatList.appendChild(li);
-
+    chatInput.value= '';
   };
 }

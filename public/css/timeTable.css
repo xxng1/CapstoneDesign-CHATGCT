@@ -128,7 +128,7 @@ h2 {
   border-radius: 7px;
   backdrop-filter: blur(20px);
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-  width: 50%;
+  width: 60%;
 }
 
 /* Department list */
@@ -143,7 +143,7 @@ h2 {
   border-radius: 7px;
   backdrop-filter: blur(20px);
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-  width: 15%;
+  width: 17%;
   transition: background 0.3s ease-in-out;
 }
 
@@ -163,7 +163,7 @@ h2 {
   border-radius: 7px;
   backdrop-filter: blur(20px);
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-  width: 10%;
+  width: 11%;
   cursor: pointer;
   transition: background 0.3s ease-in-out;
 }

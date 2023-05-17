@@ -1,9 +1,9 @@
 var images = [
-    "./images/무한이1.png",
-    "./images/무한이2.png",
-    "./images/무한이3.png",
-    "./images/무한이4.png",
-    "./images/무한이5.png",
+    "./images/캐릭터1.png",
+    "./images/캐릭터2.png",
+    "./images/캐릭터3.png",
+    "./images/캐릭터4.png",
+    "./images/캐릭터5.png",
     // 원하는 이미지들의 경로를 배열로 나열해줍니다.
 ];
 

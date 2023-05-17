@@ -144,6 +144,16 @@ button {
   font-weight: 600;
 }
 
+.joinbtn{
+  border: 2px solid rgb(221, 221, 233);
+  box-shadow: 0px 0px 10px rgb(221, 221, 233);
+  background-color: white;
+  width: 150px;
+  height: 30px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
 .panelbtn {
   margin-top: auto;
   display: flex;

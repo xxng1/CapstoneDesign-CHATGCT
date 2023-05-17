@@ -56,7 +56,7 @@ server.listen(PORT, () => {
   console.log(`server is running ${PORT}`);
 });
 
-// //권상씨의 공지사항 판별모델
+//권상씨의 공지사항 판별모델
 // io.on("connection", (socket) => {
 //   socket.on("chatting", (data) => {
 //     const { name, msg } = data;
