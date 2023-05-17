@@ -67,8 +67,9 @@ function Chatbot(name, msg, msg2, time) {
     const li = document.createElement("li");
     li.classList.add("received");
     const dom = `<span class="profile">
-      <img class="received-image" src=./images/icon.png alt="any">
+      <img class="received-image" src=./images/icon.png alt="any">무한이
       </span>
+      <span><img id="randomImage" src=""></span>
       <span class="message">${this.msg}${'\n'}${this.msg2}</span>
       <span class="time">${this.time}</span>`;
 

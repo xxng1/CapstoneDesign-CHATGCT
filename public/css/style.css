@@ -20,9 +20,19 @@ input:focus {
 }
 
 .nav-item {
-  font-family: "Gugi", cursive;
-  font-size: 35px;
+  font-family: 'Jua', sans-serif;
+  font-size: 36px;
   text-align: center;
+  color: #0b296f;
+}
+
+.nav-item a {
+  text-decoration:none;
+}
+
+.title:visited {
+  color: #0b296f;
+  text-decoration:none;
 }
 
 .wrapper {
@@ -71,7 +81,7 @@ input:focus {
 }
 
 .display-container {
-  background: #eeeeee;
+  background: #f7f6f7;
   flex: 12;
   overflow-y: auto;
 }
@@ -131,6 +141,13 @@ input:focus {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  font-family: 'Cute Font', cursive;
+  font-size: 30px;
+}
+
+.profile-name{
+  font-family: 'Cute Font', cursive;
+  font-size: 30px;
 }
 
 .profile .user {
@@ -151,6 +168,7 @@ input:focus {
   object-fit: cover;
   width: 70px;
   height: 70px;
+  box-shadow: 3px 3px 6px 0 rgb(0 0 0/20%);
 }
 
 .message {
@@ -162,7 +180,7 @@ input:focus {
   font-family: 'Noto Sans KR', sans-serif;
   margin: 0 5px;
   min-width: 40px;
-  box-shadow: 2px 2px 4px gray;
+  box-shadow: 3px 3px 6px 0 rgb(0 0 0/20%);
   display: inline-block;
   word-break: break-all;
   overflow-wrap: break-word;
@@ -201,17 +219,23 @@ input:focus {
 
 .received .guide-box {
   float: left;
-  background-color: rgb(221, 221, 233);
+  background-color: rgb(240, 240, 240);
   width: 250px;
   height: 80px;
   border-radius: 15px;
   margin: 10px;
   color: rgb(92, 104, 136);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  
+  font-size: 15px; 
+  font-family: Jua, sans-serif;
+}
+
+.received .guide-box img {
+  margin-bottom: 3%;
 }
 
 .received .guide-box:hover {
@@ -242,6 +266,16 @@ input:focus {
 }
 
 .logbtn {
+  border: 2px solid rgb(221, 221, 233);
+  box-shadow: 0px 0px 10px rgb(221, 221, 233);
+  background-color: white;
+  width: 150px;
+  height: 30px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.joinbtn{
   border: 2px solid rgb(221, 221, 233);
   box-shadow: 0px 0px 10px rgb(221, 221, 233);
   background-color: white;
