@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
 * {
   margin: 0;
   padding: 0;
@@ -6,7 +9,7 @@
 html,
 body {
   height: 100%;
-  background-color: white;
+  background-color: white; 
 }
 
 button {
@@ -20,10 +23,12 @@ input:focus {
 }
 
 .nav-item {
-  font-family: 'Jua', sans-serif;
-  font-size: 36px;
+  /* font-family: 'Jua', sans-serif; */
+  font-family: "Poppins", sans-serif;
+  font-size: 30px;
+  font-weight: bold;
   text-align: center;
-  color: #0b296f;
+  color: #000066;
 }
 
 .nav-item a {
@@ -31,7 +36,7 @@ input:focus {
 }
 
 .title:visited {
-  color: #0b296f;
+  color: #000066;
   text-decoration:none;
 }
 
@@ -41,16 +46,13 @@ input:focus {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border: 1px solid black;
   position: relative;
 }
 
 .boundary {
   background: #000066;
   height: 40px;
-  border-width: 2px;
-  border-color: #666666;
-  border-style: solid;
+  
 }
 
 .user-container {
@@ -81,7 +83,8 @@ input:focus {
 }
 
 .display-container {
-  background: #f7f6f7;
+  background: #f7f6f7; 
+  backdrop-filter: blur(20px);
   flex: 12;
   overflow-y: auto;
 }
