@@ -1,11 +1,19 @@
 function isValidEmail(username) {
   // 이메일은 일반적으로 local-part@domain 형식을 따릅니다.
+  // id 값이 "adminid" 또는 "testid"인 경우에는 이메일 형식 검사를 수행하지 않고 항상 true를 반환
+  if (username === "adminid" || username === "testid") {
+    return true;
+  }
   var pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return pattern.test(username);
 }
 
 function isValidPassword(password) {
   // 비밀번호는 8~20자의 영문 대소문자, 숫자, 특수문자(!, @, #, $, %, ^, &, *)를 사용하며, 모두 포함해야 합니다.
+  // id 값이 "adminid" 또는 "testid"인 경우에는 이메일 형식 검사를 수행하지 않고 항상 true를 반환
+  if (password === "adminpw" || password === "testpw") {
+    return true;
+  }
   var pattern =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z\d!@#$%^&*]{8,20}$/;
   if (!pattern.test(password)) {
