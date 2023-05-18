@@ -35,14 +35,7 @@ button {
   background: none;
   border: none;
   cursor: pointer;
-}
-
-.boundary {
-  background: #000066;
-  height: 40px;
-  /* border-width: 2px;
-  border-color: #666666;
-  border-style: solid; */
+  outline: none;
 }
 
 .nav-item {
@@ -58,9 +51,16 @@ button {
   text-decoration:none;
 }
 
+.title {
+  color: #000066;
+  text-decoration:none;
+  text-shadow: 2px 2px 4px silver;
+}
+
 .title:visited {
   color: #000066;
   text-decoration:none;
+  text-shadow: 2px 2px 4px silver;
 }
 
 #showPanelBtn {
@@ -231,4 +231,62 @@ button {
   display: block; /* 버튼을 블록 요소로 만들어 중앙 정렬을 가능하게 합니다. */
   border-radius: 5px;
   transition: 0.3s; /* 버튼에 애니메이션 효과를 추가합니다. */
+}
+
+.boundary {
+  background: #000066;
+  height: 38px;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  color: white;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 20px;
+}
+
+.rotating-text {
+  opacity: 0;
+  color: white;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 20px;
+  margin-left: 1%;
+}
+
+.rotating-text a {
+  text-decoration:none;
+  color: white;
+}
+
+.show-text {
+  opacity: 1;
+  display: block;
+  animation: fade-in 1s forwards;
+}
+
+.hide-text {
+  opacity: 0;
+  display: none;
+  animation: fade-out 1s forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    display: none;
+  }
+  to {
+    opacity: 1;
+    display: block;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+    display: none;
+  }
+  to {
+    opacity: 0;
+    display: block;
+  }
 }
