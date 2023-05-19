@@ -99,7 +99,7 @@ router.post("/change_id/changeId_process", (req, res) => {
           const verificationCode = generateVerificationCode();
 
           // 이메일 인증 코드 발송
-          sendVerificationCode(newEmail, verificationCode);
+          sendVerificationCode(user.loginid, verificationCode);
 
           // 기존 아이디를 새로운 이메일로 변경 및 인증 상태 업데이트
           db.query(
