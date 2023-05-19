@@ -17,12 +17,19 @@ chatInput.addEventListener("keypress", (e) => {
 sendButton.addEventListener("click", send);
 
 function send() {
-  const param = {
-    name: "나",
-    msg: chatInput.value,
-  };
-  // chatting 이벤트 발생 데이터는 param으로 전송
-  socket.emit("chatting", param);
+  if (chatInput.value.trim() !== ""){
+    const param = {
+      name: "나",
+      msg: chatInput.value,
+    };
+    // chatting 이벤트 발생 데이터는 param으로 전송
+    socket.emit("chatting", param);
+
+    chatInput.value = "";
+  }
+  else {
+    chatInput.value = "";
+  }
 }
 
 socket.on("chatting", (data) => {
@@ -30,13 +37,16 @@ socket.on("chatting", (data) => {
   const item = new LiModel(name, msg, time);
   const item2 = new Chatbot(name, chat_response,chat_url, time);
   
-  if (chatInput.value.trim() === "") {
-    chatInput.value = "";
-  } else {
-    item.makeLi();
-    item2.makeLi();
-    displayContainer.scrollTo(0, displayContainer.scrollHeight);
-  }
+  item.makeLi();
+  item2.makeLi();
+  displayContainer.scrollTo(0, displayContainer.scrollHeight);
+  // if (chatInput.value.trim() === "") {
+  //   chatInput.value = "";
+  // } else {
+  //   item.makeLi();
+  //   item2.makeLi();
+  //   displayContainer.scrollTo(0, displayContainer.scrollHeight);
+  // }
 });
 
 function LiModel(name, msg, time){
@@ -53,7 +63,6 @@ function LiModel(name, msg, time){
 
     li.innerHTML = dom;
     chatList.appendChild(li);
-    chatInput.value = "";
   };
 }
 
@@ -75,6 +84,5 @@ function Chatbot(name, msg, msg2, time) {
 
     li.innerHTML = dom;
     chatList.appendChild(li);
-    chatInput.value= '';
   };
 }
