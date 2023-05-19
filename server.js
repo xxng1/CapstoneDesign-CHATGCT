@@ -34,6 +34,7 @@ const indexRouter = require("./routes/index.js");
 const loginRouter = require("./routes/login.js");
 const mypageRouter = require("./routes/mypage.js");
 const timetableRouter = require("./routes/timeTable.js");
+const usermanageRouter = require("./routes/user_manage.js");
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json()); // JSON body parsing 미들웨어 설정
@@ -44,6 +45,7 @@ app.use("/", indexRouter);
 app.use("/login", loginRouter);
 app.use("/mypage", mypageRouter);
 app.use("/timetable", timetableRouter);
+app.use("/user_manage", usermanageRouter);
 
 app.get("/", function (req, res) {
   res.render("index");
