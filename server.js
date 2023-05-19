@@ -1,7 +1,6 @@
 const express = require("express");
 const { spawn } = require("child_process");
-// const pyProg = spawn("python", ["Tokenizer.py"]);
-const pyProg = spawn("python", ["./AI/gpt_chat.py"]);
+const pyProg = spawn("python", ["Tokenizer.py"]);
 const app = express();
 
 var session = require("express-session");
@@ -56,66 +55,28 @@ server.listen(PORT, () => {
   console.log(`server is running ${PORT}`);
 });
 
-//권상씨의 공지사항 판별모델
-// io.on("connection", (socket) => {
-//   socket.on("chatting", (data) => {
-//     const { name, msg } = data;
-//     pyProg.stdin.write(msg + "\n");
-
-//     let result = [];
-
-//     pyProg.stdout.on("data", (data) => {
-//       const lines = data.toString().split("\n");
-//       lines.forEach((line) => {
-//         result.push(line.trim());
-//       });
-//     });
-//     pyProg.stdout.on("end", () => {
-//       io.emit("chatting", {
-//         name,
-//         msg,
-//         time: moment(new Date()).format("h:mm A"),
-//         chat_response: result[0],
-//         chat_url: result[1],
-//       });
-//       result = [];
-//     });
-//   });
-// });
-
-//chat gpt 활용
 io.on("connection", (socket) => {
-  const pyProg = spawn("python", ["gpt_chat.py"]);
-
-  const dataListener = (data) => {
-    console.log('Data received: ' + data); // Log received data
-    result += data.toString();
-  };
-
-  const endListener = () => {
-    console.log('End event received'); // Log end event
-    io.emit("chatting", {
-      name,
-      msg,
-      time: moment(new Date()).format("h:mm A"),
-      chat_response: result,
-    });
-    pyProg.stdout.off("data", dataListener);
-    pyProg.stdout.off("end", endListener);
-  };
-
-  const errorListener = (error) => {
-    console.log('Error: ' + error); // Log any errors
-  };
-
   socket.on("chatting", (data) => {
     const { name, msg } = data;
-    console.log('Message received: ' + msg); // Log incoming message
     pyProg.stdin.write(msg + "\n");
-    let result = '';
-    pyProg.stdout.on("data", dataListener);
-    pyProg.stdout.on("end", endListener);
-    pyProg.stderr.on("data", errorListener);
+
+    let result = [];
+
+    pyProg.stdout.on("data", (data) => {
+      const lines = data.toString().split("\n");
+      lines.forEach((line) => {
+        result.push(line.trim());
+      });
+    });
+    pyProg.stdout.on("end", () => {
+      io.emit("chatting", {
+        name,
+        msg,
+        time: moment(new Date()).format("h:mm A"),
+        chat_response: result[0],
+        chat_url: result[1],
+      });
+      result = [];
+    });
   });
 });
-
