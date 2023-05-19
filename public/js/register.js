@@ -22,17 +22,10 @@ function isValidPassword(password) {
 function validate() {
   var name = document.forms[0]["name"].value;
   var studentnum = document.forms[0]["studentnum"].value;
-  var subject = document.forms[0]["subject"].value;
   var loginid = document.forms[0]["loginid"].value;
   var password = document.forms[0]["password"].value;
 
-  if (
-    name == "" ||
-    studentnum == "" ||
-    subject == "" ||
-    loginid == "" ||
-    password == ""
-  ) {
+  if (name == "" || studentnum == "" || loginid == "" || password == "") {
     alert("모든 필드를 채워주세요!");
     return false;
   }
@@ -53,10 +46,10 @@ function validate() {
     return false;
   }
 
-  var major = document.getElementById("major").value;
+  var major = document.getElementById("department-list").value;
 
-  if (!regExp.test(major)) {
-    alert("학과는 완성된 한글만 입력해야 합니다.");
+  if (major === "전체 학과") {
+    alert("학과는 반드시 선택해야 합니다.");
     return false;
   }
 
@@ -126,18 +119,18 @@ function handleSubmit(event, url) {
         alert(data.message);
         if (data.message.includes("은 사용 중인 아이디입니다.")) {
           // userData.loginid에 관련된 메시지인 경우
-          document.getElementById("loginid").value="";
+          document.getElementById("loginid").value = "";
           document.getElementById("loginid").focus();
           modal.style.display = "none";
         } else if (data.message.includes("은 사용 중인 학번입니다.")) {
           // userData.studentnum에 관련된 메시지인 경우
-          document.getElementById("studentnum").value="";
+          document.getElementById("studentnum").value = "";
           document.getElementById("studentnum").focus();
           modal.style.display = "none";
         } else if (
           data.message.includes("인증코드가 일치하지 않습니다. 다시 해보세요.")
         ) {
-          document.getElementById("loginid").value="";
+          document.getElementById("loginid").value = "";
           document.getElementById("loginid").focus();
           modal.style.display = "none";
         }
