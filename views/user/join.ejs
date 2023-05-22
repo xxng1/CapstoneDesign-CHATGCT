@@ -11,13 +11,14 @@
       rel="stylesheet"
     />
   </head>
+
   <body>
     <ul class="navbar">
       <li class="nav-item" style="min-height: 45px">
         <a href="/"
           ><img src="/images/home1.png" alt="홈" style="float: left"
         /></a>
-        <a href="/" class="title"><img src="/images/title.png"></a>
+        <a href="/" class="title"><img src="/images/title.png" /></a>
         <button id="showPanelBtn" style="float: right">
           <img src="/images/Menu.png" alt="메뉴" />
         </button>
@@ -33,8 +34,9 @@
           <a href="/login/"
             ><button class="logbtn" id="loginbtn" onclick="login()">
               로그인
-            </button></a>
-            <a href="/login/join/"><button class="joinbtn">회원가입</button></a>
+            </button></a
+          >
+          <a href="/login/join/"><button class="joinbtn">회원가입</button></a>
           <!-- <a href="/login/logout"
             ><button
               class="logbtn"
@@ -57,10 +59,28 @@
     </ul>
     <div class="boundary">
       <span>&nbsp 관련사이트 |</span>
-      <span class="rotating-text"><a href="https://www.gachon.ac.kr/kor/index.do" target="_blank">가천대학교 홈페이지</a></span>
-      <span class="rotating-text"><a href="https://cyber.gachon.ac.kr/login.php" target="_blank">가천대학교 사이버캠퍼스</a></span>
-      <span class="rotating-text"><a href="https://lib.gachon.ac.kr/" target="_blank">가천대학교 중앙도서관(G)</a></span>
-      <span class="rotating-text"><a href="https://sso.gachon.ac.kr/svc/tk/Auth.do?ac=Y&ifa=N&id=portal&" target="_blank">가천포털 학사행정</a></span>
+      <span class="rotating-text"
+        ><a href="https://www.gachon.ac.kr/kor/index.do" target="_blank"
+          >가천대학교 홈페이지</a
+        ></span
+      >
+      <span class="rotating-text"
+        ><a href="https://cyber.gachon.ac.kr/login.php" target="_blank"
+          >가천대학교 사이버캠퍼스</a
+        ></span
+      >
+      <span class="rotating-text"
+        ><a href="https://lib.gachon.ac.kr/" target="_blank"
+          >가천대학교 중앙도서관(G)</a
+        ></span
+      >
+      <span class="rotating-text"
+        ><a
+          href="https://sso.gachon.ac.kr/svc/tk/Auth.do?ac=Y&ifa=N&id=portal&"
+          target="_blank"
+          >가천포털 학사행정</a
+        ></span
+      >
     </div>
     <div class="container">
       <div class="box" style="margin-bottom: 20px; margin-top: 20px">
@@ -79,19 +99,25 @@
             />
             <input
               type="text"
-              style="width: 160%; padding: 0.5em;"
+              style="width: 160%; padding: 0.5em"
               name="studentnum"
               id="studentnum"
               placeholder="학번"
               maxlength="20"
               required
             />
-            <select id="department-list" name="department" style="width: 166%; padding:0.5em; margin-top:5px;">
+            <select
+              id="department-list"
+              name="subject"
+              style="width: 166%; padding: 0.5em; margin-top: 5px"
+            >
               <option value="전체 학과">전체 학과</option>
               <option value="한국학전공">한국학전공</option>
               <option value="경영학부">경영학부</option>
               <option value="경영학부(경영학)">경영학부(경영학)</option>
-              <option value="경영학부(글로벌경영학)">경영학부(글로벌경영학)</option>
+              <option value="경영학부(글로벌경영학)">
+                경영학부(글로벌경영학)
+              </option>
               <option value="금융수학과">금융수학과</option>
               <option value="국어국문학과">국어국문학과</option>
               <option value="영어영문학과">영어영문학과</option>
@@ -125,18 +151,24 @@
               <option value="건축학과-건축공학">건축학과-건축공학</option>
               <option value="건축학과-실내건축학">건축학과-실내건축학</option>
               <option value="산업공학과">산업공학과</option>
-              <option value="설비·소방공학과-소방방재공학">설비·소방공학과-소방방재공학</option>
+              <option value="설비·소방공학과-소방방재공학">
+                설비·소방공학과-소방방재공학
+              </option>
               <option value="기계공학과">기계공학과</option>
               <option value="식품생명공학과">식품생명공학과</option>
               <option value="토목환경공학과">토목환경공학과</option>
               <option value="인공지능학과">인공지능학과</option>
               <option value="신소재공학과">신소재공학과</option>
               <option value="바이오나노융합학과">바이오나노융합학과</option>
-              <option value="IT융합공학과-컴퓨터공학">IT융합공학과-컴퓨터공학</option>
+              <option value="IT융합공학과-컴퓨터공학">
+                IT융합공학과-컴퓨터공학
+              </option>
               <option value="게임영상공학과">게임영상공학과</option>
               <option value="AI·소프트웨어학과">AI·소프트웨어학과</option>
               <option value="정보보호학과">정보보호학과</option>
-              <option value="차세대스마트에너지시스템융합학과">차세대스마트에너지시스템융합학과</option>
+              <option value="차세대스마트에너지시스템융합학과">
+                차세대스마트에너지시스템융합학과
+              </option>
               <option value="나노-화공생명공학과">나노-화공생명공학과</option>
               <option value="나노-전기공학과">나노-전기공학과</option>
               <option value="나노-전자공학과">나노-전자공학과</option>
@@ -144,8 +176,12 @@
               <option value="한의학과">한의학과</option>
               <option value="공연예술학과">공연예술학과</option>
               <option value="조소과">조소과</option>
-              <option value="디자인학과-시각디자인">디자인학과-시각디자인</option>
-              <option value="디자인학과-산업디자인">디자인학과-산업디자인</option>
+              <option value="디자인학과-시각디자인">
+                디자인학과-시각디자인
+              </option>
+              <option value="디자인학과-산업디자인">
+                디자인학과-산업디자인
+              </option>
               <option value="회화과">회화과</option>
               <option value="음학학과">음학학과</option>
               <option value="체육학과">체육학과</option>
@@ -183,7 +219,7 @@
                 type="submit"
                 id="register"
                 class="login"
-                style="margin-bottom: 20px; width: 166%; padding:0.5em;"
+                style="margin-bottom: 20px; width: 166%; padding: 0.5em"
               >
                 회원 가입
               </button></a

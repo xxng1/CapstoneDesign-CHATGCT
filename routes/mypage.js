@@ -99,7 +99,7 @@ router.post("/change_id/changeId_process", (req, res) => {
           const verificationCode = generateVerificationCode();
 
           // 이메일 인증 코드 발송
-          sendVerificationCode(newEmail, verificationCode);
+          sendVerificationCode(user.loginid, verificationCode);
 
           // 기존 아이디를 새로운 이메일로 변경 및 인증 상태 업데이트
           db.query(
@@ -308,22 +308,31 @@ router.post("/withdraw/withdraw_process", function (req, res) {
             [req.session.login_id],
             function (error, results, fields) {
               if (error) throw error;
-
-              // 사용자 탈퇴 후 세션 파괴
-              req.session.destroy(function (err) {
-                // 세션 파괴 중 오류가 발생한 경우 처리
-                if (err) throw err;
-
-                // 성공 메시지 전송
-                res.status(200).json({
-                  message:
-                    username +
-                    "님의 회원 탈퇴가 완료되었습니다. 저희 서비스를 이용해 주셔서 감사합니다.",
-                  redirect: "/",
-                });
-              });
+          
+              // Also delete from timeTable where user_id matches the login_id
+              db.query(
+                "DELETE FROM timeTable WHERE user_id = ?",
+                [req.session.login_id],
+                function (error, results, fields) {
+                  if (error) throw error;
+          
+                  // User deletion and related timetable deletion completed, destroy session
+                  req.session.destroy(function (err) {
+                    // Handle error during session destroy
+                    if (err) throw err;
+          
+                    // Success message
+                    res.status(200).json({
+                      message:
+                        username +
+                        "님의 회원 탈퇴가 완료되었습니다. 저희 서비스를 이용해 주셔서 감사합니다.",
+                      redirect: "/",
+                    });
+                  });
+                }
+              );
             }
-          );
+          );          
         } else {
           // 비밀번호가 일치하지 않으면 오류 메시지 전송
           res.status(200).json({
