@@ -50,7 +50,7 @@ function authIsOwner(request, response) {
     return false;
   }
 }
-//수정필요
+
 router.get("/", (request, response) => {
   var subdoc;
   if (authIsOwner(request, response) === true) {
