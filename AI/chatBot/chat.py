@@ -1,7 +1,7 @@
 import sys
 import openai
 
-openai.api_key = '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'
+openai.api_key = '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'
 
 def chat_with_gpt(prompt):
     try:
@@ -42,3 +42,4 @@ while True:
     # 토큰 수가 최대치를 넘지 않도록 이전 대화 메시지 삭제
     while len("\n".join([f'{msg["role"]}: {msg["content"]}' for msg in conversation])) > 4096:
         del conversation[0]
+

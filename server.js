@@ -1,17 +1,24 @@
 const express = require("express");
 const { spawn } = require("child_process");
-const pyProg = spawn("python", ["Tokenizer.py"]);
-const app = express();
+const moment = require("moment");
 
-var session = require("express-session");
-var MySqlStore = require("express-mysql-session")(session);
-var options = {
+const path = require("path");
+const http = require("http");
+
+const app = express();
+const server = require("http").createServer(app);
+const io = require("socket.io")(server);
+
+// Set up session
+const session = require("express-session");
+const MySqlStore = require("express-mysql-session")(session);
+const options = {
   host: "localhost",
   user: "dbid231",
   password: "dbpass231",
   database: "db23108",
 };
-var sessionStore = new MySqlStore(options);
+const sessionStore = new MySqlStore(options);
 app.use(
   session({
     secret: "keyboard cat",
@@ -21,25 +28,18 @@ app.use(
   })
 );
 
-const path = require("path");
-const http = require("http");
+// Configure views and static files
+app.set("view engine", "ejs");
+app.set("views", __dirname + "/views");
+app.use(express.static(__dirname + "/public"));
+app.use(express.json());
 
-const server = http.createServer(app);
-const moment = require("moment");
-
-const socketIO = require("socket.io");
-const io = socketIO(server);
-
+// Routes
 const indexRouter = require("./routes/index.js");
 const loginRouter = require("./routes/login.js");
 const mypageRouter = require("./routes/mypage.js");
 const timetableRouter = require("./routes/timeTable.js");
 const usermanageRouter = require("./routes/user_manage.js");
-
-app.use(express.static(path.join(__dirname, "public")));
-app.use(express.json()); // JSON body parsing 미들웨어 설정
-app.set("view engine", "ejs");
-app.set("views", __dirname + "/views");
 
 app.use("/", indexRouter);
 app.use("/login", loginRouter);
@@ -47,22 +47,40 @@ app.use("/mypage", mypageRouter);
 app.use("/timetable", timetableRouter);
 app.use("/user_manage", usermanageRouter);
 
+// Handle root route
 app.get("/", function (req, res) {
   res.render("index");
 });
 
-const PORT = process.env.PORT || 60008;
+// Socket.IO connection handling
+io.on("connection", (socket) => {
+  socket.on("chatting", async (data) => {
+    const { name, msg } = data;
 
-server.listen(PORT, () => {
-  console.log(`server is running ${PORT}`);
+    try {
+      const result = await runTokenizerScript(msg);
+      const [chatResponse, chatUrl] = result;
+
+      io.emit("chatting", {
+        name,
+        msg,
+        time: moment(new Date()).format("h:mm A"),
+        chat_response: chatResponse,
+        chat_url: chatUrl,
+      });
+    } catch (error) {
+      console.error("Error running tokenizer script:", error);
+    }
+  });
 });
 
-io.on("connection", (socket) => {
-  socket.on("chatting", (data) => {
-    const { name, msg } = data;
-    pyProg.stdin.write(msg + "\n");
+// Function to run the Tokenizer.py script and return the result
+function runTokenizerScript(msg) {
+  return new Promise((resolve, reject) => {
+    const pyProg = spawn("python", ["Tokenizer.py"]);
 
     let result = [];
+    let errorOccurred = false;
 
     pyProg.stdout.on("data", (data) => {
       const lines = data.toString().split("\n");
@@ -70,15 +88,27 @@ io.on("connection", (socket) => {
         result.push(line.trim());
       });
     });
-    pyProg.stdout.on("end", () => {
-      io.emit("chatting", {
-        name,
-        msg,
-        time: moment(new Date()).format("h:mm A"),
-        chat_response: result[0],
-        chat_url: result[1],
-      });
-      result = [];
+
+    pyProg.stderr.on("data", (data) => {
+      console.error("Error executing Tokenizer.py:", data.toString());
+      errorOccurred = true;
     });
+
+    pyProg.on("close", (code) => {
+      if (code === 0 && !errorOccurred) {
+        resolve(result);
+      } else {
+        reject(new Error("Tokenizer.py execution failed"));
+      }
+    });
+
+    pyProg.stdin.write(msg + "\n");
+    pyProg.stdin.end();
   });
+}
+
+const PORT = process.env.PORT || 60008;
+
+server.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
