@@ -366,3 +366,22 @@ input:focus {
     display: block;
   }
 }
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.silver {
+  background-color: silver;
+}
+
+.black {
+  background-color: black;
+}
+
+.dot + .dot {
+  margin: 10px;
+}

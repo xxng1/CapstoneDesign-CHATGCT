@@ -25,6 +25,46 @@ function send() {
     // chatting 이벤트 발생 데이터는 param으로 전송
     socket.emit("chatting", param);
 
+    const li = document.createElement("li");
+    li.classList.add("received");
+    const load = `<span class="profile">
+      <img class="received-image" src=./images/icon.png alt="any">GCT
+      </span>
+      <span class="message" style="display:flex; flex-direction: row;">
+        <div class="dot" style="visibility: hidden;"></div>
+        <div id="dot1" class="dot black"></div>
+        <div id="dot2" class="dot silver"></div>
+        <div id="dot3" class="dot silver"></div>
+      </span>`;
+    li.innerHTML = load;
+    chatList.appendChild(li);
+     setInterval(() => {
+
+      if(document.getElementById('dot1').className === "dot black"){
+        document.getElementById('dot1').className = "dot silver";
+        document.getElementById('dot3').className = "dot silver";
+        document.getElementById('dot2').className = "dot black";
+      }
+      else if(document.getElementById('dot2').className === "dot black"){
+        document.getElementById('dot2').className = "dot silver";
+        document.getElementById('dot1').className = "dot silver";
+        document.getElementById('dot3').className = "dot black";
+      }
+      else if(document.getElementById('dot3').className === "dot black"){
+        document.getElementById('dot3').className = "dot silver";
+        document.getElementById('dot2').className = "dot silver";
+        document.getElementById('dot1').className = "dot black";
+      }
+      
+    }, 500);
+
+    
+
+    setTimeout(() => {
+      chatList.removeChild(li);
+      clearInterval(interval);
+    }, 7000)
+
     chatInput.value = "";
   }
   else {
