@@ -6,7 +6,6 @@ const chatList = document.querySelector(".chatting-list");
 const chatInput = document.querySelector(".chatting-input");
 const sendButton = document.querySelector(".send-button");
 const displayContainer = document.querySelector(".display-container");
-const button = document.querySelector("send-button");
 
 chatInput.addEventListener("keypress", (e) => {
   if (e.keyCode === 13) {
