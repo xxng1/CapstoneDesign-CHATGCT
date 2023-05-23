@@ -102,7 +102,8 @@ function runTokenizerScript(msg) {
       }
     });
 
-    pyProg.stdin.write(msg + "\n");
+    pyProg.stdin.write(msg.trim() + "\n");
+    console.log(msg.trim());
     pyProg.stdin.end();
   });
 }
