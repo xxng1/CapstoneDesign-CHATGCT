@@ -9,7 +9,7 @@ const displayContainer = document.querySelector(".display-container");
 const button = document.querySelector("send-button");
 
 chatInput.addEventListener("keypress", (e) => {
-  if (e.keyCode === 13) {
+  if (e.keyCode === 13 && sendButton.disabled === false) {
     send();
   }
 });
@@ -63,8 +63,9 @@ function send() {
     setTimeout(() => {
       chatList.removeChild(li);
       clearInterval(interval);
+      sendButton.disabled = false;
     }, 7000)
-
+    sendButton.disabled = true;
     chatInput.value = "";
   }
   else {
@@ -80,13 +81,6 @@ socket.on("chatting", (data) => {
   item.makeLi();
   item2.makeLi();
   displayContainer.scrollTo(0, displayContainer.scrollHeight);
-  // if (chatInput.value.trim() === "") {
-  //   chatInput.value = "";
-  // } else {
-  //   item.makeLi();
-  //   item2.makeLi();
-  //   displayContainer.scrollTo(0, displayContainer.scrollHeight);
-  // }
 });
 
 function LiModel(name, msg, time){
