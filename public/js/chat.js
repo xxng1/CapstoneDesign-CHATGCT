@@ -64,6 +64,7 @@ function send() {
       clearInterval(interval);
       sendButton.disabled = false;
     }, 7000)
+    displayContainer.scrollTo(0, displayContainer.scrollHeight);
     sendButton.disabled = true;
     chatInput.value = "";
   }
