@@ -38,7 +38,7 @@ function send() {
       </span>`;
     li.innerHTML = load;
     chatList.appendChild(li);
-     setInterval(() => {
+     const interval = setInterval(() => {
 
       if(document.getElementById('dot1').className === "dot black"){
         document.getElementById('dot1').className = "dot silver";
