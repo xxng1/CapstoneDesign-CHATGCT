@@ -33,7 +33,7 @@ while continue_crawling:
             notice_soup = BeautifulSoup(notice_response.text, 'html.parser')
             
             # 세부 공지사항의 내용을 크롤링합니다.
-            content = notice_soup.select_one('div.view-con').text.strip()
+            content = notice_soup.select_one('div.view-con').text.replace('\n', ' ').replace('\r', '').strip()
 
             # 해당 조건에 맞는 데이터를 all_data에 추가합니다.
             row_dict = row.to_dict()
