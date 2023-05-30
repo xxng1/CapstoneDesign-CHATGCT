@@ -56,10 +56,12 @@ app.get("/", function (req, res) {
 io.on("connection", (socket) => {
   socket.on("chatting", async (data) => {
     const { name, msg } = data;
-
     try {
       const result = await runTokenizerScript(msg);
       const [chatResponse, chatUrl] = result;
+
+      // Log the user's message
+      await logMessage("question", msg);
 
       io.emit("chatting", {
         name,
@@ -68,11 +70,49 @@ io.on("connection", (socket) => {
         chat_response: chatResponse,
         chat_url: chatUrl,
       });
+
+      // Log the chatbot's response
+      if(!chatResponse.includes("키워드로 검색한 내용이 없습니다.")) {
+        await logMessage("answer", chatResponse);
+      }
+
     } catch (error) {
       console.error("Error running tokenizer script:", error);
     }
   });
 });
+
+const db = require("/home/t23108/svr/JH_PRACTICE/routes/db.js");
+
+// Log message to the database
+function logMessage(type, message) {
+  // Get the current time
+  const time = new Date();
+
+  // 질문일때 message 저장
+  let keywords = message;
+  
+  // Extract the keywords if the message type is "answer"
+  if (type === "answer") {
+    const keywordMatch = message.match(/\['(.*)'\]/);
+    if (keywordMatch) {
+      keywords = keywordMatch[1].split(',').map(s => s.trim().replace(/'/g, "")).join(',');
+    }       
+  }
+
+  // Insert the message into the database
+  db.query(
+    "INSERT INTO messages (type, message, time) VALUES (?, ?, ?)",
+    [type, keywords, time],
+    (error, result) => {
+      if (error) {
+        console.error("Error inserting message:", error);
+      } else {
+        console.log(`Inserted ${result.affectedRows} row(s).`);
+      }
+    }
+  );
+}
 
 // Function to run the Tokenizer.py script and return the result
 function runTokenizerScript(msg) {

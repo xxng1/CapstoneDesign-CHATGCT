@@ -7,7 +7,7 @@ import os
 import signal
 import sys
 
-openai.api_key = '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'
+openai.api_key = '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'
 
 def create_chunks(text, chunk_size, overlap):
     tt_encoding = tiktoken.get_encoding("gpt2")
@@ -34,98 +34,71 @@ def generate_questions(prompt):
     response = openai.Completion.create(
         engine="text-davinci-003",
         prompt=f"{prompt}\n\n이 텍스트에 기반한 질문과 대답이 다음과 같을 수 있습니다:",
-        temperature=0.5,
-        max_tokens=500,  
+        temperature=1,
+        max_tokens=1000,  
         n=10,
     )
     return [choice.text.strip() for choice in response.choices]
 
 def signal_handler(sig, frame):
-    with open('squad_data.json', 'w', encoding='utf-8') as f:
-        json.dump(squad_data, f, ensure_ascii=False, indent=2)
+    with open('t5_data.json', 'w', encoding='utf-8') as f:
+        json.dump(t5_data, f, ensure_ascii=False, indent=2)
     sys.exit(0)
 
 signal.signal(signal.SIGINT, signal_handler)
 
 notification_df = pd.read_csv('/home/t23108/svr/JH_PRACTICE/AI/crawling/notification.csv')
 
-chunk_size = 3500
+chunk_size = 3000
 overlap = 50
 tt_encoding = tiktoken.get_encoding("gpt2")
 
-squad_data = {"data": []}
+t5_data = []
 
-for index, row in notification_df.iterrows():
-    title = row["제목"]
-    content = row['content']
-    tokens = tt_encoding.encode(content)
-    if len(tokens) > 4096:
-        chunks = create_chunks(content, chunk_size, overlap)
-        for chunk in chunks:
-            generated_questions = generate_questions(chunk)
+try:
+    for index, row in notification_df.iterrows():
+        title = row["제목"]
+        content = row['content']
+        tokens = tt_encoding.encode(content)
+        if len(tokens) > 4096:
+            chunks = create_chunks(content, chunk_size, overlap)
+            for chunk in chunks:
+                generated_questions = generate_questions(chunk)
+                for i, qa in enumerate(generated_questions, start=1):
+                    qa_split = qa.split('\n')
+
+                    if len(qa_split) == 2:
+                        question = qa_split[0][2:].strip()
+                        answer = qa_split[1][2:].strip()
+
+                        t5_data.append({
+                            "input": f"question: {question} context: {chunk}",
+                            "target": answer,
+                        })
+                        print(i)
+                        print(json.dumps(t5_data, indent=2, ensure_ascii=False))
+        else:
+            generated_questions = generate_questions(content)
             for i, qa in enumerate(generated_questions, start=1):
                 qa_split = qa.split('\n')
 
                 if len(qa_split) == 2:
                     question = qa_split[0][2:].strip()
                     answer = qa_split[1][2:].strip()
-                    answer_words = answer.split(' ')
-                    first_few_words = ' '.join(answer_words[:3])  # adjust the number based on your preference
-                    answer_start = content.find(first_few_words)
-
-                    squad_data["data"].append({
-                        "title": title,
-                        "paragraphs": [
-                            {
-                                "context": chunk,
-                                "qas": [
-                                    {
-                                        "question": question,
-                                        "id": f"{index+1}-{i}",
-                                        "answers": [
-                                            {
-                                                "text": answer,
-                                                "answer_start": answer_start
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
+                    
+                    t5_data.append({
+                        "input": f"question: {question} context: {content}",
+                        "target": answer,
                     })
-                    print(json.dumps(squad_data, indent=2, ensure_ascii=False))
-    else:
-        generated_questions = generate_questions(content)
-        for i, qa in enumerate(generated_questions, start=1):
-            qa_split = qa.split('\n')
+                    print(i)
+                    print(json.dumps(t5_data, indent=2, ensure_ascii=False))
 
-            if len(qa_split) == 2:
-                question = qa_split[0][2:].strip()
-                answer = qa_split[1][2:].strip()
-                answer_start = content.find(answer)
-                
-                squad_data["data"].append({
-                    "title": title,
-                    "paragraphs": [
-                        {
-                            "context": content,
-                            "qas": [
-                                {
-                                    "question": question,
-                                    "id": f"{index+1}-{i}",
-                                    "answers": [
-                                        {
-                                            "text": answer,
-                                            "answer_start": answer_start
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                })
-                print(json.dumps(squad_data, indent=2, ensure_ascii=False))
+except Exception as e:
+    print("An error occurred:", str(e))
 
-with open('squad_data.json', 'w', encoding='utf-8') as f:
-    json.dump(squad_data, f, ensure_ascii=False, indent=2)
+finally:
+    with open('t5_data.json', 'w', encoding='utf-8') as f:
+        json.dump(t5_data, f, ensure_ascii=False, indent=2)
+
+
 
