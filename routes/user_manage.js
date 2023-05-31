@@ -135,39 +135,11 @@ router.get("/delete_process/:userId", (request, response) => {
 //   });
 // });
 
-//학과
-router.get("/user_stats", (request, response) => {
-  db.query(
-    `SELECT subject, COUNT(*) AS count FROM user GROUP BY subject ORDER BY count DESC`,
-    
-    function (error, result) {
-      if (error) {
-        throw error;
-      }
-      var context = {
-        doc: `user/user_stats.ejs`,
-        //counts: result[0].count,
-        loggined: authIsOwner(request, response),
-        id: request.session.login_id,
-        cls: request.session.class,
-        results: result,
-        
-      };
-      request.app.render("user/user_stats.ejs", context, function (err, html) {
-        if (err) {
-          throw err;
-        }
-        response.end(html);
-      });
-    }
-  );
-});
 
-//학번
-
-// router.get("/user_stats_num", (request, response) => {
+// router.get("/user_stats", (request, response) => {
 //   db.query(
 //     `SELECT subject, COUNT(*) AS count FROM user GROUP BY subject ORDER BY count DESC`,
+    
 //     function (error, result) {
 //       if (error) {
 //         throw error;
@@ -190,6 +162,49 @@ router.get("/user_stats", (request, response) => {
 //     }
 //   );
 // });
+
+//학번
+
+router.get("/user_stats", (request, response) => {
+  db.query(
+    `SELECT subject, COUNT(*) AS count FROM user GROUP BY subject ORDER BY count DESC`,
+    function (error, result) {
+      if (error) {
+        throw error;
+      }
+
+      db.query(
+        `SELECT SUBSTRING(studentnum, 1, 4) AS studentnum_prefix, COUNT(*) AS studentnumcount
+        FROM user
+        GROUP BY studentnum_prefix
+        HAVING COUNT(*) > 1
+        ORDER BY studentnumcount DESC`,
+        function (error, studentnumResult) {
+          if (error) {
+            throw error;
+          }
+
+          var context = {
+            doc: `user/user_stats.ejs`,
+            loggined: authIsOwner(request, response),
+            id: request.session.login_id,
+            cls: request.session.class,
+            results: result,
+            studentnumResults: studentnumResult
+          };
+
+          request.app.render("user/user_stats.ejs", context, function (err, html) {
+            if (err) {
+              throw err;
+            }
+            response.end(html);
+          });
+        }
+      );
+    }
+  );
+});
+
 
 
 

@@ -58,7 +58,7 @@
     </div>
 
 
-    <h1>유저 통계</h1>
+    <h1>학과 통계</h1>
     <h2><a href="/user_manage">유저정보보기</a></h2>
     <hr>
 
@@ -84,7 +84,7 @@
         data: {
           labels: subjects,
           datasets: [{
-            label: 'Subject Counts',
+            label: '학과 Counts',
             data: counts,
             backgroundColor: 'rgba(75, 192, 192, 0.2)',
             borderColor: 'rgba(75, 192, 192, 1)',
@@ -102,7 +102,44 @@
       });
     </script>
 
-    
+<h1>학번 통계</h1>
+<canvas id="studentnumChart"></canvas>
+
+<script>
+  // 데이터 준비
+  var studentnumPrefixes = [];
+  var studentnumCounts = [];
+
+  <% for (var i = 0; i < studentnumResults.length; i++) { %>
+    studentnumPrefixes.push('<%= studentnumResults[i].studentnum_prefix %>');
+    studentnumCounts.push('<%= studentnumResults[i].studentnumcount %>');
+  <% } %>
+
+  // 그래프 생성
+  var ctx = document.getElementById('studentnumChart').getContext('2d');
+  var studentnumChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: studentnumPrefixes,
+      datasets: [{
+        label: '학번 Counts',
+        data: studentnumCounts,
+        backgroundColor: 'rgba(153, 204, 255, 0.2)',
+        borderColor: 'rgba(153, 204, 255, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          precision: 0
+        }
+      }
+    }
+  });
+</script>
+
     
     
     <script src="../js/panel.js"></script>
