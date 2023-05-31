@@ -9,6 +9,7 @@ const displayContainer = document.querySelector(".display-container");
 
 chatInput.addEventListener("keypress", (e) => {
   if (e.keyCode === 13 && sendButton.disabled === false) {
+    e.preventDefault(); // prevent the default action
     send();
   }
 });
