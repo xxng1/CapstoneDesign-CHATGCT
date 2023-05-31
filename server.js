@@ -84,6 +84,7 @@ io.on("connection", (socket) => {
   });
 });
 
+//질문을 저장하고 검색에 성공한 경우, 키워드를 한 행씩 따로 저장
 const db = require("/home/t23108/svr/JH_PRACTICE/routes/db.js");
 
 // Log message to the database
@@ -94,27 +95,40 @@ function logMessage(type, message) {
   // When a question is asked, save the message
   let keywords = message.trim();
 
-  
   // Extract the keywords if the message type is "answer"
   if (type === "answer") {
     const keywordMatch = message.match(/\['(.*)'\]/);
     if (keywordMatch) {
-      keywords = keywordMatch[1].split(',').map(s => s.trim().replace(/'/g, "")).join(',');
+      keywords = keywordMatch[1].split(',').map(s => s.trim().replace(/'/g, ""));
+      // Insert each keyword into the database
+      keywords.forEach(keyword => {
+        db.query(
+          "INSERT INTO messages (type, message, time) VALUES (?, ?, ?)",
+          [type, keyword, time],
+          (error, result) => {
+            if (error) {
+              console.error("Error inserting message:", error);
+            } else {
+              console.log(`Inserted ${result.affectedRows} row(s).`);
+            }
+          }
+        );
+      });
     }       
-  }
-
-  // Insert the message into the database
-  db.query(
-    "INSERT INTO messages (type, message, time) VALUES (?, ?, ?)",
-    [type, keywords, time],
-    (error, result) => {
-      if (error) {
-        console.error("Error inserting message:", error);
-      } else {
-        console.log(`Inserted ${result.affectedRows} row(s).`);
+  } else {
+    // Insert the message into the database
+    db.query(
+      "INSERT INTO messages (type, message, time) VALUES (?, ?, ?)",
+      [type, keywords, time],
+      (error, result) => {
+        if (error) {
+          console.error("Error inserting message:", error);
+        } else {
+          console.log(`Inserted ${result.affectedRows} row(s).`);
+        }
       }
-    }
-  );
+    );
+  }
 }
 
 // Function to run the Tokenizer.py script and return the result
