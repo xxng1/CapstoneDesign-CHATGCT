@@ -47,6 +47,7 @@ router.get("/update/:userId", (request, response) => {
         password: result[0].password,
         name:  result[0].name,
         studentnum:  result[0].studentnum,
+        subject: result[0].subject,
         class:  result[0].class,
 
         pId: userId,

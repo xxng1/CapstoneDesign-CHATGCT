@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <title>사용자 관리</title>
-    <link rel="stylesheet" type="text/css" href="/css/mypagestyle.css" />
+    <!--<link rel="stylesheet" type="text/css" href="/css/mypagestyle.css" /> -->
+    <link rel="stylesheet" type="text/css" href="/css/joinstyle.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -57,43 +58,83 @@
     </div>
 
 
-
-    <h1>USER 정보 수정</h1>
-    <form action="/user_manage/update_process/<%=pId%>" method="post">
-      <p>
-        <input
+  <div class="container">
+    <div class="box" style="margin-bottom: 20px; margin-top: 20px">
+      <div class="info">
+        <h4 style="margin-bottom: 30px">유저 정보 수정</h4>
+        <form action="/user_manage/update_process/<%=pId%>" method="post">
+          <h5>정보입력</h5>
+          <input
+            type="text"
+            style="width: 160%; padding: 0.5em"
+            name="name"
+            id="name"
+            value="<%=name%>"
+            placeholder="이름"
+            maxlength="20"
+            required
+          />
+          <input
+            type="text"
+            style="width: 160%; padding: 0.5em"
+            name="studentnum"
+            id="studentnum"
+            placeholder="학번"
+            value="<%=studentnum%>"
+            maxlength="20"
+            required
+          />
+          <input
           type="text"
-          name="loginid"
-          style="width: 100px; border-color: antiquewhite"
-          value="<%=loginid%>"
-          placeholder="loginid"
+          style="width: 160%; padding: 0.5em"
+          name="subject"
+          id="subject"
+          placeholder="학과"
+          value="<%=subject%>"
+          maxlength="30"
+          required
         />
-      </p>
-      <p>
-        <input
-          name="password"
-          placeholder="password"
-          value="<%=password%>"
-          style="width: 200px; height: 50px; border-color: antiquewhite"
-        />
-      </p>
-      <p>
-        <input
-          name="name"
-          placeholder="name"
-          value="<%=name%>"
-          style="width: 200px; height: 50px; border-color: antiquewhite"
-        />
-      </p>
-      
-      
-      <input type="hidden" name = "class" value='a' >
-  
-      
-      <p>by <%=id%></p>
-      <p><input type="submit" /></p>
-    </form>
-  </form>
+          <h5 style="margin-top: 20px">이메일/비밀번호</h5>
+          <input
+            type="text"
+            style="width: 160%; padding: 0.5em"
+            name="loginid"
+            id="loginid"
+            value="<%=loginid%>"
+            list="options"
+            placeholder="example@email.com"
+            required
+          />
+          <!-- <datalist id="options">
+            <option value="@gmail.com">@gmail.com</option>
+            <option value="@naver.com">@naver.com</option>
+            <option value="@yahoo.net">@yahoo.net</option>
+          </datalist> -->
+          <input
+            type="password"
+            style="width: 160%; padding: 0.5em"
+            name="password"
+            id="password"
+            value="<%=password%>"
+            placeholder="비밀번호"
+          />
+          <p>
+            <input type="hidden" name="class" value="a" />
+          </p>
+
+          <a style="width: 100%; height: 100%"
+            ><button
+              type="submit"
+              class="login"
+              style="margin-bottom: 20px; width: 166%; padding: 0.5em"
+            >
+              수정
+            </button></a
+          >
+        </form>
+      </div>
+    </div>
+  </div>
   
   
     
