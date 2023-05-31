@@ -12,26 +12,8 @@ function authIsOwner(request, response) {
   }
 }
 
-//--
-function calculateSubjectCount(subject, callback) {
-  db.query(
-    `SELECT COUNT(*) AS count FROM user WHERE subject = ?`,
-    [subject],
-    function (error, result) {
-      if (error) {
-        callback(error, null);
-      } else {
-        // Extract the count from the result
-        const count = result[0].count;
-        callback(null, count);
-      }
-    }
-  );
-}
-//--
-
 router.get("/", (request, response) => {
-  db.query(`SELECT * FROM user `, function (error, result) {
+  db.query(`SELECT * FROM user WHERE loginid <> 'adminid'`, function (error, result) {
     if (error) {
       throw error;
     }
