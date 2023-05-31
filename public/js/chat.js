@@ -63,9 +63,11 @@ function send() {
     setTimeout(() => {
       chatList.removeChild(li);
       clearInterval(interval);
+      chatInput.disabled = false;
       sendButton.disabled = false;
     }, 7000)
     displayContainer.scrollTo(0, displayContainer.scrollHeight);
+    chatInput.disabled = true;  // Disable the chat input field
     sendButton.disabled = true;
     chatInput.value = "";
   }

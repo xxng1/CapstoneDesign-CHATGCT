@@ -89,8 +89,9 @@ function logMessage(type, message) {
   // Get the current time
   const time = new Date();
 
-  // 질문일때 message 저장
-  let keywords = message;
+  // When a question is asked, save the message
+  let keywords = message.trim();
+
   
   // Extract the keywords if the message type is "answer"
   if (type === "answer") {
