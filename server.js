@@ -74,45 +74,24 @@ io.on("connection", (socket) => {
       });
 
       // Log the chatbot's response
-      if(!chatResponse.includes("키워드로 검색한 내용이 없습니다.")) {
-        await logMessage("answer", chatResponse);
+      if (!chatResponse.includes("질문과 일치하는 공지를 찾지 못했습니다.")) {
+        // Split the response into sentences
+        let sentences = chatResponse.split("<br>");
+
+        // Iterate over each sentence
+        for (let i = 0; i < sentences.length; i++) {
+          // If the sentence includes "키워드로 검색한 내용", log it
+          if (sentences[i].includes("키워드로 검색한 내용")) {
+            await logMessage("answer", sentences[i]);
+          }
+        }
       }
-
+      
     } catch (error) {
       console.error("Error running tokenizer script:", error);
     }
   });
 });
- 
-// logmessage() 부분 X
-io.on("connection", (socket) => {
-  socket.on("chatting", async (data) => {
-    const { name, msg } = data;
-
-    try {
-      runTokenizerScript(msg)
-      // 오류 발생 여부와 상관 없도록 수정
-        .then((result) => {
-          const [chatResponse, chatUrl] = result;
-
-          socket.emit("chatting", {
-            name,
-            msg,
-            time: moment(new Date()).format("h:mm A"),
-            chat_response: chatResponse,
-            chat_url: chatUrl,
-          });
-        })
-        .catch((error) => {
-          console.error("Error running tokenizer script:", error);
-        });
-    } catch (error) {
-      console.error("Error running tokenizer script:", error);
-    }
-  });
-});
-
-
 
 //질문을 저장하고 검색에 성공한 경우, 키워드를 한 행씩 따로 저장
 const db = require("/home/t23108/svr/JH_PRACTICE/routes/db.js");
@@ -129,9 +108,11 @@ function logMessage(type, message) {
   if (type === "answer") {
     const keywordMatch = message.match(/\['(.*)'\]/);
     if (keywordMatch) {
-      keywords = keywordMatch[1].split(',').map(s => s.trim().replace(/'/g, ""));
+      keywords = keywordMatch[1]
+        .split(",")
+        .map((s) => s.trim().replace(/'/g, ""));
       // Insert each keyword into the database
-      keywords.forEach(keyword => {
+      keywords.forEach((keyword) => {
         db.query(
           "INSERT INTO messages (type, message, time) VALUES (?, ?, ?)",
           [type, keyword, time],
@@ -144,7 +125,7 @@ function logMessage(type, message) {
           }
         );
       });
-    }       
+    }
   } else {
     // Insert the message into the database
     db.query(
@@ -196,7 +177,7 @@ function runTokenizerScript(msg) {
   });
 }
 
-const PORT = process.env.PORT || 60008;
+const PORT = process.env.PORT || 60007;
 
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
