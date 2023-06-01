@@ -83,6 +83,36 @@ io.on("connection", (socket) => {
     }
   });
 });
+ 
+// logmessage() 부분 X
+io.on("connection", (socket) => {
+  socket.on("chatting", async (data) => {
+    const { name, msg } = data;
+
+    try {
+      runTokenizerScript(msg)
+      // 오류 발생 여부와 상관 없도록 수정
+        .then((result) => {
+          const [chatResponse, chatUrl] = result;
+
+          socket.emit("chatting", {
+            name,
+            msg,
+            time: moment(new Date()).format("h:mm A"),
+            chat_response: chatResponse,
+            chat_url: chatUrl,
+          });
+        })
+        .catch((error) => {
+          console.error("Error running tokenizer script:", error);
+        });
+    } catch (error) {
+      console.error("Error running tokenizer script:", error);
+    }
+  });
+});
+
+
 
 //질문을 저장하고 검색에 성공한 경우, 키워드를 한 행씩 따로 저장
 const db = require("/home/t23108/svr/JH_PRACTICE/routes/db.js");
@@ -146,9 +176,10 @@ function runTokenizerScript(msg) {
       });
     });
 
+    // 오류 발생 여부에 상관 없도록 수정 => model 실행되면 GPU관련 오류
     pyProg.stderr.on("data", (data) => {
       console.error("Error executing Tokenizer.py:", data.toString());
-      errorOccurred = true;
+      errorOccurred = false;
     });
 
     pyProg.on("close", (code) => {
