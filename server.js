@@ -41,6 +41,7 @@ const mypageRouter = require("./routes/mypage.js");
 const timetableRouter = require("./routes/timeTable.js");
 const usermanageRouter = require("./routes/user_manage.js");
 const messagemanageRouter = require("./routes/message_manage.js");
+const recommendRouter = require("./routes/recommend.js");
 
 app.use("/", indexRouter);
 app.use("/login", loginRouter);
@@ -48,6 +49,7 @@ app.use("/mypage", mypageRouter);
 app.use("/timetable", timetableRouter);
 app.use("/user_manage", usermanageRouter);
 app.use("/message_manage", messagemanageRouter);
+app.use("/recommend", recommendRouter);
 
 // Handle root route
 app.get("/", function (req, res) {

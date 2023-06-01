@@ -385,3 +385,50 @@ input:focus {
 .dot + .dot {
   margin: 10px;
 }
+
+#recommend select{
+  width: 100px;
+  border: 1px solid silver;
+  border-radius: 7px;
+  backdrop-filter: blur(20px);
+
+}
+
+.submitbtn{
+  width: 20%;
+  background-color: #3498db;
+  color: #ffffff;
+  border-radius: 4px;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.submitbtn:hover{
+  background-color: #2980b9;
+}
+
+.research{
+  width: 100px;
+  height: 30px;
+  background-color: #3498db;
+  color: #ffffff;
+  border-radius: 4px;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  float: right;
+}
+
+.research:hover{
+  background-color: #2980b9;
+}
+
+.addcourse {
+  font-family: 'Noto Sans KR', sans-serif;
+  margin-bottom: 20px;
+}
+
+.addcourse:hover{
+  font-weight: 700;
+}
