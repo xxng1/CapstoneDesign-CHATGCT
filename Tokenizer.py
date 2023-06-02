@@ -134,7 +134,7 @@ def main(question, data):
                 chatBotMessage = f"👉 ChatGCT가 찾은 정보입니다. <br>❗️{chat_response} ❗️"
                 processed_link = data.loc[data['점수'].idxmax()]['url']
                 result = f'<a href="{processed_link}" target="_blank"><img src="https://www.gachon.ac.kr/sites/kor/images/sub/slogan_1.png" alt="링크 이미지"></a>'
-                print(chatBotMessage + "<br><br>" +processed_messange_2 + "<br><br>" +  "<br><br>"+ result)
+                print(processed_message+ "<br><br>"+chatBotMessage + "<br><br>" +processed_messange_2 + "<br><br>" +  "<br><br>"+ result)
         else:
             processed_message = "📌  {0} 키워드로 검색한 내용이 다수입니다".format(token_list)
             noti_list = Find_Title(data,max_value)
