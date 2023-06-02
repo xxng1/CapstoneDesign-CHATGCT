@@ -12,7 +12,7 @@ function authIsOwner(request, response) {
 
 //사용자의 이름을 가져오는 거 추가
 router.get("/", (req, res) => {
-  db.query(`SELECT * FROM user WHERE login_id = ?`, [req.session.login_id], function (error, result) {
+  db.query(`SELECT * FROM user WHERE loginid = ?`, [req.session.login_id], function (error, result) {
     if (error) {
       throw error;
     }

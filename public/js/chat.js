@@ -7,6 +7,9 @@ const chatInput = document.querySelector(".chatting-input");
 const sendButton = document.querySelector(".send-button");
 const displayContainer = document.querySelector(".display-container");
 
+var interval;
+const li = document.createElement("li");
+
 chatInput.addEventListener("keypress", (e) => {
   if (e.keyCode === 13 && sendButton.disabled === false) {
     e.preventDefault(); // prevent the default action
@@ -25,7 +28,6 @@ function send() {
     // chatting 이벤트 발생 데이터는 param으로 전송
     socket.emit("chatting", param);
 
-    const li = document.createElement("li");
     li.classList.add("received");
     const load = `<span class="profile">
       <img class="received-image" src=./images/icon.png alt="any">GCT
@@ -38,7 +40,7 @@ function send() {
       </span>`;
     li.innerHTML = load;
     chatList.appendChild(li);
-     const interval = setInterval(() => {
+     interval = setInterval(() => {
 
       if(document.getElementById('dot1').className === "dot black"){
         document.getElementById('dot1').className = "dot silver";
@@ -59,13 +61,6 @@ function send() {
     }, 500);
 
     
-
-    setTimeout(() => {
-      chatList.removeChild(li);
-      clearInterval(interval);
-      chatInput.disabled = false;
-      sendButton.disabled = false;
-    }, 7000)
     displayContainer.scrollTo(0, displayContainer.scrollHeight);
     chatInput.disabled = true;  // Disable the chat input field
     sendButton.disabled = true;
@@ -81,6 +76,10 @@ socket.on("chatting", (data) => {
   const item = new LiModel(name, msg, time);
   const item2 = new Chatbot(name, chat_response,chat_url, time);
   
+  chatList.removeChild(li);
+  clearInterval(interval);
+  chatInput.disabled = false;
+  sendButton.disabled = false;
   item.makeLi();
   item2.makeLi();
   displayContainer.scrollTo(0, displayContainer.scrollHeight);

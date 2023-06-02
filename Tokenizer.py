@@ -9,6 +9,7 @@ from kiwipiepy.utils import Stopwords
 import re
 import torch
 import tiktoken
+import openai
 
 
 tokenizer = AutoTokenizer.from_pretrained("Kdogs/klue-finetuned-squad_kor_v1")
@@ -39,6 +40,22 @@ def get_answer(question, context):
     answer = tokenizer.decode(predict_answer_tokens, skip_special_tokens=True)
     
     return answer
+
+def get_answer_gpt(question, context):
+
+    openai.api_key = "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"
+
+    messages = []
+
+    user_content = context + '\n 위 글을 바탕으로 아래 질문에 답해주세요. \n' + question
+
+    messages.append({"role": "user", "content": f"{user_content}"})
+
+    completion = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=messages)
+
+    assistant_content = completion.choices[0].message["content"].strip()
+
+    return(assistant_content)
 
 def Find_Title(df, max_score):
     same_score = df.loc[df['점수'] == max_score, ['제목']]
