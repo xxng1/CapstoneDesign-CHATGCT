@@ -45,7 +45,6 @@ router.get("/", (req, res) => {
 //     if (error) {
 //       throw error;
 //     }
-//     tmplogin = "Y";
 //     var context = {
 //       loggined: authIsOwner(req, res),
 //       id: req.session.login_id,
