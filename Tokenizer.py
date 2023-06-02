@@ -111,9 +111,7 @@ def main(question, data):
             processed_message = "📌  {0} 키워드로 검색한 내용입니다.".format(token_list)
             processed_messange_2 = f"✨  공지제목 : [{data.loc[data['점수'].idxmax()]['제목']}]✨"
             small_content = clean_content(data.iloc[data['점수'].idxmax()]['content'])
-            
-            #chat_response = get_answer(question,small_content)
-            #chatBotMessage = f"👉 ChatGCT가 찾은 정보입니다. <br>❗️{chat_response} ❗️"
+  
             processed_link = data.loc[data['점수'].idxmax()]['url']
             result = f'<a href="{processed_link}" target="_blank"><img src="https://www.gachon.ac.kr/sites/kor/images/sub/slogan_1.png" alt="링크 이미지"></a>'
             token_lenth = str(len(tokenizer.tokenize(small_content)))        
@@ -129,14 +127,14 @@ def main(question, data):
                 chatBotMessage = f"👉 ChatGCT가 찾은 정보입니다. <br>❗️{chat_response_list} ❗️"
                 processed_link = data.loc[data['점수'].idxmax()]['url']
                 result = f'<a href="{processed_link}" target="_blank"><img src="https://www.gachon.ac.kr/sites/kor/images/sub/slogan_1.png" alt="링크 이미지"></a>'
-                print("A Case" + str(len(tokenizer.tokenize(small_content)))+"<br><br>" + processed_message+ "<br><br>" + chatBotMessage + "<br><br>" +processed_messange_2 +"<br><br>" + "<br><br>"+ result)
+                print(processed_message+ "<br><br>" + chatBotMessage + "<br><br>" +processed_messange_2 +"<br><br>" + "<br><br>"+ result)
               
             else:
                 chat_response = get_answer(question,small_content)
                 chatBotMessage = f"👉 ChatGCT가 찾은 정보입니다. <br>❗️{chat_response} ❗️"
                 processed_link = data.loc[data['점수'].idxmax()]['url']
                 result = f'<a href="{processed_link}" target="_blank"><img src="https://www.gachon.ac.kr/sites/kor/images/sub/slogan_1.png" alt="링크 이미지"></a>'
-                print("B Case" +"<br><br>" +processed_message+ "<br><br>" + chatBotMessage + "<br><br>" +processed_messange_2 + "<br><br>" +  "<br><br>"+ result)
+                print(chatBotMessage + "<br><br>" +processed_messange_2 + "<br><br>" +  "<br><br>"+ result)
         else:
             processed_message = "📌  {0} 키워드로 검색한 내용이 다수입니다".format(token_list)
             noti_list = Find_Title(data,max_value)
@@ -164,14 +162,14 @@ def main(question, data):
                 chatBotMessage = f"👉 ChatGCT가 찾은 정보입니다. <br>❗️{chat_response_list} ❗️"
                 processed_link = data.loc[data['점수'].idxmax()]['url']
                 result = f'<a href="{processed_link}" target="_blank"><img src="https://www.gachon.ac.kr/sites/kor/images/sub/slogan_1.png" alt="링크 이미지"></a>'
-                print("C Case" + str(len(tokenizer.tokenize(small_content))) +"<br><br>" +processed_message+ "<br><br>" + chatBotMessage + "<br><br>" +processed_messange_2 + "<br><br>" + "<br><br>"+ result)
+                print(processed_message+ "<br><br>" + chatBotMessage + "<br><br>" +processed_messange_2 + "<br><br>" + "<br><br>"+ result)
             
             else:
                 chat_response = get_answer(question,small_content)
                 chatBotMessage = f"👉 ChatGCT가 찾은 정보입니다. <br>❗️{chat_response} ❗️"
                 processed_link = top_similar['url']
                 result = f'<a href="{processed_link}" target="_blank"><img src="https://www.gachon.ac.kr/sites/kor/images/sub/slogan_1.png" alt="링크 이미지"></a>'
-                print("D Case" +"<br><br>" +processed_message+ "<br><br>"+ chatBotMessage + "<br><br>" + processed_messange_2 + "<br><br>" + "<br><br>"+ result )
+                print(processed_message+ "<br><br>"+ chatBotMessage + "<br><br>" + processed_messange_2 + "<br><br>" + "<br><br>"+ result )
     else:
         processed_message = "📌  질문과 일치하는 공지를 찾지 못했습니다.😭 <br> ✔️수강신청 ✔️학사공지 관련 다른 공지를 물어봐주시면 찾아볼게요!😆"
         print(processed_message)
