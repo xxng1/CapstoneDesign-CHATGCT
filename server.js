@@ -179,7 +179,7 @@ function runTokenizerScript(msg) {
   });
 }
 
-const PORT = process.env.PORT || 60008;
+const PORT = process.env.PORT || 60009;
 
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
