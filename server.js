@@ -96,7 +96,7 @@ io.on("connection", (socket) => {
 });
 
 //질문을 저장하고 검색에 성공한 경우, 키워드를 한 행씩 따로 저장
-const db = require("/home/t23108/svr/JH_PRACTICE/routes/db.js");
+const db = require("./routes/db.js");
 
 // Log message to the database
 function logMessage(type, message) {
