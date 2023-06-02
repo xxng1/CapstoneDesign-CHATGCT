@@ -65,7 +65,7 @@
     
 
     <canvas id="myChart"></canvas>
-
+    
     <script>
       // 데이터 준비
       var messages = [];
@@ -91,16 +91,22 @@
           }]
         },
         options: {
-          scales: {
-            y: {
-              beginAtZero: true,
-              precision: 0
-            }
-          }
-        }
-      });
+    scales: {
+      y: {
+        beginAtZero: true,
+        precision: 0
+      }
+    },
+    layout: {
+      padding: {
+        left: 150,
+        right: 150
+      }
+    }
+  }
+});
     </script>
-
+    
 
 
 <h1>많이 답변된 키워드</h1>
@@ -131,14 +137,20 @@
       }]
     },
     options: {
-      scales: {
-        y: {
-          beginAtZero: true,
-          precision: 0
-        }
+    scales: {
+      y: {
+        beginAtZero: true,
+        precision: 0
+      }
+    },
+    layout: {
+      padding: {
+        left: 150,
+        right: 150
       }
     }
-  });
+  }
+});
 </script>
 
 
