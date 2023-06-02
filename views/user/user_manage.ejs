@@ -11,6 +11,43 @@
       rel="stylesheet"
     />
   </head>
+<style>
+  table {
+    margin: 0 auto;
+    border-collapse: collapse;
+    width: 1200px; 
+  }
+
+  th,
+  td {
+  padding: 8px;
+  text-align: left;
+  border: 1px solid #ddd; /* 일반적인 테두리 스타일 */
+}
+
+th:first-child,
+td:first-child {
+  border-top-left-radius: 10px; /* 왼쪽 상단 셀의 테두리 둥글게 */
+  border-bottom-left-radius: 10px; /* 왼쪽 하단 셀의 테두리 둥글게 */
+}
+
+th:last-child,
+td:last-child {
+  border-top-right-radius: 10px; /* 오른쪽 상단 셀의 테두리 둥글게 */
+  border-bottom-right-radius: 10px; /* 오른쪽 하단 셀의 테두리 둥글게 */
+}
+
+h2{
+  text-align: center;
+  margin-top: 10px;
+}
+
+
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+</style>
   <body>
 
     <ul class="navbar">
@@ -57,7 +94,7 @@
     </div>
 
 
-    <h1>유저 정보</h1>
+    <h2>유저 정보</h2>
 
     <table style="width: 800px">
       <tr   style="background-color:#d3e2f8">
@@ -66,8 +103,8 @@
         <td>name</td>
         <td>Subject</td>
         <td>class</td>
-        <td>c</td>
-        <td>c</td>
+        <td>Update</td>
+        <td>Delete</td>
       </tr>
       <% var i = 0; while(i < results.length) { %>
       <tr>
