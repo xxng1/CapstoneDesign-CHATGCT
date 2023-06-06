@@ -11,6 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cute+Font&family=Jua&family=Noto+Sans+KR:wght@500&display=swap"
     rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 </head>
 
 <body>
@@ -237,7 +238,10 @@
                   <img class="received-image" src="./images/icon.png" alt="any" />
                 </span>
                 <span class="message">
-                  <div class="guide-box" onclick="location.href='/recommend/';">
+                  <!-- <div class="guide-box" onclick="location.href='/recommend/';">
+                    <img src="./images/table.png" />시간표 추천
+                  </div> -->
+                  <div class="guide-box" id="courseRecommend">
                     <img src="./images/table.png" />시간표 추천
                   </div>
                   <div class="guide-box" onclick="location.href='https://www.gachon.ac.kr/kor/7986/subview.do';">

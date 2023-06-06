@@ -18,7 +18,7 @@ model = AutoModelForQuestionAnswering.from_pretrained("Kdogs/klue-finetuned-squa
 
 question = sys.stdin.readline()
 
-data = pd.read_csv('/home/t23108/svr/JH_PRACTICE/AI/crawling/notification.csv')
+data = pd.read_csv('AI/crawling/notification.csv')
 
 def clean_content(content):
     lines = content.split('\n')
