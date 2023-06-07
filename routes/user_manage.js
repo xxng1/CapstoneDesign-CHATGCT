@@ -150,7 +150,12 @@ router.get("/delete_process/:userId", (request, response) => {
 
 router.get("/user_stats", (request, response) => {
   db.query(
-    `SELECT subject, COUNT(*) AS count FROM user GROUP BY subject ORDER BY count DESC`,
+    `SELECT subject, COUNT(*) AS count 
+    FROM user 
+    WHERE subject <> 'admin'
+    GROUP BY subject 
+    ORDER BY count DESC;
+    `,
     function (error, result) {
       if (error) {
         throw error;
@@ -159,9 +164,10 @@ router.get("/user_stats", (request, response) => {
       db.query(
         `SELECT SUBSTRING(studentnum, 1, 4) AS studentnum_prefix, COUNT(*) AS studentnumcount
         FROM user
+        WHERE subject <> 'admin'
         GROUP BY studentnum_prefix
-        HAVING COUNT(*) > 1
-        ORDER BY studentnumcount DESC`,
+        ORDER BY studentnumcount DESC;
+        `,
         function (error, studentnumResult) {
           if (error) {
             throw error;
