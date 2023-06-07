@@ -14,12 +14,14 @@ const li = document.createElement("li");
 let sendNotProceed = false;
 
 // 시간표 추천 버튼을 클릭하면 실행 해당 메세지를 소켓으로 "courseRecom"이벤트로 전달
-csRe.addEventListener("click", function () {
-  sendNotProceed = true;
-  const message = `"<span style="color:brown;">고마워</span>"를 입력 하시면 추천 서비스는 종료됩니다.<br />추천을 원하시는 강의가 <span style="color:red;">전공</span>인가요, <span style="color:red;">교양</span>인가요?`;
-  socket.emit("courseRecom", message);
-  chatInput.focus();
-});
+if (csRe !== null) {
+  csRe.addEventListener("click", function () {
+    sendNotProceed = true;
+    const message = `"<span style="color:brown;">고마워</span>"를 입력 하시면 추천 서비스는 종료됩니다.<br />추천을 원하시는 강의가 <span style="color:red;">전공</span>인가요, <span style="color:red;">교양</span>인가요?`;
+    socket.emit("courseRecom", message);
+    chatInput.focus();
+  });
+}
 
 //해당 함수도 "courseRecom"로 메세지를 전달하는 함수
 function sendCourseRecom() {
