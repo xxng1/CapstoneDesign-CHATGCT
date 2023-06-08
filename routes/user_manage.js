@@ -75,7 +75,7 @@ router.post("/update_process/:userId", (request, response) => {
     var users = qs.parse(body);
     userId = request.params.userId;
     db.query(
-      "UPDATE user SET loginid=?, password=?, name=?, studentnum=?, class=? WHERE id=?",
+      "UPDATE user SET loginid=?, password=?, name=?, studentnum=?, class=?, verificationCode = NULL, verified = true WHERE id=?",
       [users.loginid, users.password, users.name, users.studentnum, users.class, userId],
       function (error, result) {
         response.writeHead(302, { Location: `/user_manage` });
