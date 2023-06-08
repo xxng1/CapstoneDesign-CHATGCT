@@ -13,24 +13,28 @@ function authIsOwner(request, response) {
 }
 
 router.get("/", (request, response) => {
-  db.query(`SELECT * FROM user WHERE loginid <> 'adminid'`, function (error, result) {
+  db.query(`SELECT * FROM user WHERE loginid <> 'adminid' and verified = 1`, function (error, verifiedUsers) {
     if (error) {
       throw error;
     }
-    var context = {
-      doc: `user/user_manage.ejs`,
-      loggined: authIsOwner(request, response),
-      id: request.session.login_id,
-      cls: request.session.class,
-      results: result,
-    };
-    request.app.render("user/user_manage.ejs", context, function (err, html) {
-      response.end(html);
+    db.query(`SELECT * FROM user WHERE verified = 0`, function (error, unverifiedUsers) {
+      if (error) {
+        throw error;
+      }
+      var context = {
+        doc: `user/user_manage.ejs`,
+        loggined: authIsOwner(request, response),
+        id: request.session.login_id,
+        cls: request.session.class,
+        verifiedUsers: verifiedUsers,
+        unverifiedUsers: unverifiedUsers
+      };
+      request.app.render("user/user_manage.ejs", context, function (err, html) {
+        response.end(html);
+      });
     });
   });
 });
-
-
 
 router.get("/update/:userId", (request, response) => {
   var userId = request.params.userId;
