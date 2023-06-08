@@ -156,7 +156,7 @@ router.get("/user_stats", (request, response) => {
   db.query(
     `SELECT subject, COUNT(*) AS count 
     FROM user 
-    WHERE subject <> 'admin'
+    WHERE subject <> 'admin' and verified = true
     GROUP BY subject 
     ORDER BY count DESC;
     `,
@@ -168,7 +168,7 @@ router.get("/user_stats", (request, response) => {
       db.query(
         `SELECT SUBSTRING(studentnum, 1, 4) AS studentnum_prefix, COUNT(*) AS studentnumcount
         FROM user
-        WHERE subject <> 'admin'
+        WHERE subject <> 'admin' and verified = true
         GROUP BY studentnum_prefix
         ORDER BY studentnumcount DESC;
         `,
