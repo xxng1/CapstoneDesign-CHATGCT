@@ -50,20 +50,15 @@
 
 ## 5. 설치 방법
 
-1. 프로젝트 클론
-git clone https://github.com/xxng1/CapstoneDesign_CHATGCT.git
+1. 프로젝트 클론: git clone https://github.com/xxng1/CapstoneDesign_CHATGCT.git
 
-2. 프로젝트 디렉토리로 이동
-cd your-project-name
+2. 프로젝트 디렉토리로 이동: cd your-project-name
 
-3. 필요한 패키지 설치
-npm install
+3. 필요한 패키지 설치: npm install
 
-4. 서버 실행
-npm start
+4. 서버 실행: npm start
 
-5.  웹 브라우저에서 다음 주소로 접속
-http://ceprj.gachon.ac.kr:60008/
+5.  웹 브라우저에서 다음 주소로 접속: http://ceprj.gachon.ac.kr:60008/
 
 ## 6. 라이센스
 이 프로젝트는 MIT 라이센스를 따릅니다.
