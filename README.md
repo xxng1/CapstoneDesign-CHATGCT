@@ -2,6 +2,9 @@
 
 이 웹사이트는 대학 공지사항에 대한 질문-응답 시스템과 개설 강좌 추천 서비스, 시간표 관리 시스템을 제공함.
 
+### 미리보기
+![Main Screen](public/images/main_screen.png)
+
 ## 1. 프로젝트 목표 & 팀원 소개
 
 ### 프로젝트 목표
@@ -57,4 +60,7 @@
 
 ## 6. 실행화면
 
-![Main Screen](public/images/main_screen.png)
+![image](https://github.com/xxng1/xxng1/assets/114065532/a841b8b7-68b0-4a0b-948f-c612deeaa162)
+
+## 7. 프로젝트 소개 url
+http://ceprj.gachon.ac.kr/inner-page-231#
